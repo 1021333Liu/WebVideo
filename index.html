@@ -288,7 +288,7 @@
     .p2 { right: 8vw; bottom: 10vh; --r: 6deg; }
     .p3 { right: 4vw; top: 16vh; --r: 10deg; }
 
-    .slot-stage { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; }
+    .slot-stage { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; justify-items: center; text-align: center; }
     .slot-stage::after {
       content: "JACKPOT";
       position: absolute;
@@ -458,6 +458,26 @@
       font-size: clamp(52px, 8vw, 122px);
       line-height: 1;
       font-weight: 900;
+      width: 100%;
+      max-width: 1120px;
+      text-align: center;
+      margin: 10px auto 0;
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
+    .today span {
+      font-family: "Microsoft YaHei", sans-serif;
+      font-size: clamp(15px, 1.35vw, 20px);
+      letter-spacing: .18em;
+      color: rgba(247,236,218,.62);
+    }
+    .today b {
+      display: block;
+      font-family: "SimSun", serif;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-shadow: 0 0 34px rgba(229,184,115,.32);
     }
     .jackpot-line {
       display: flex;
@@ -669,12 +689,12 @@
       <div class="slot">
         <div class="slot-win-line"></div>
         <div class="lever"></div>
-        <div class="reel"><div class="reel-strip"><div class="reel-item">酒精</div><div class="reel-item">香精</div><div class="reel-item">广告</div><div class="reel-item">渠道</div><div class="reel-item">情绪</div></div></div>
-        <div class="reel"><div class="reel-strip"><div class="reel-item">成本</div><div class="reel-item">包装</div><div class="reel-item">叙事</div><div class="reel-item">体面</div><div class="reel-item">身份</div></div></div>
-        <div class="reel"><div class="reel-strip"><div class="reel-item">梧桐</div><div class="reel-item">老洋房</div><div class="reel-item">白衬衫</div><div class="reel-item">摩登</div><div class="reel-item">上海幻想</div></div></div>
+        <div class="reel"><div class="reel-strip"><div class="reel-item">酒精</div><div class="reel-item">香精</div><div class="reel-item">喷头</div><div class="reel-item">广告</div><div class="reel-item">洋行</div><div class="reel-item">药皂</div><div class="reel-item">国货</div><div class="reel-item">洗衣粉</div><div class="reel-item">梧桐</div><div class="reel-item">情绪</div><div class="reel-item">身份</div><div class="reel-item">上海</div></div></div>
+        <div class="reel"><div class="reel-strip"><div class="reel-item">成本</div><div class="reel-item">包装</div><div class="reel-item">商标</div><div class="reel-item">橱窗</div><div class="reel-item">卫生</div><div class="reel-item">文明</div><div class="reel-item">体面</div><div class="reel-item">摩登</div><div class="reel-item">欲望</div><div class="reel-item">策展</div><div class="reel-item">定价</div><div class="reel-item">的</div></div></div>
+        <div class="reel"><div class="reel-strip"><div class="reel-item">梧桐</div><div class="reel-item">老洋房</div><div class="reel-item">白衬衫</div><div class="reel-item">肥皂厂</div><div class="reel-item">月份牌</div><div class="reel-item">户口供应</div><div class="reel-item">香薰蜡烛</div><div class="reel-item">城市幻想</div><div class="reel-item">商品奇观</div><div class="reel-item">情绪溢价</div><div class="reel-item">成为谁</div><div class="reel-item">香味</div></div></div>
         <div class="slot-caption"><span>cost</span><span>story</span><span>city fantasy</span></div>
       </div>
-      <h2 class="today">今天我们讲：上海的香！</h2>
+      <h2 class="today"><span>从一堆成本、广告和城市幻想里抽出</span><b>今天我们讲：上海的香！</b></h2>
     </div>
   </section>
 
@@ -718,6 +738,20 @@
     </div>
   </section>
 
+  <section class="section" id="national">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">🏷️ National Brands</span></div>
+      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">国货不是把洋货骂走，而是站上同一个货架，卖得过它。</h2>
+      <p class="lede">外资先教会市场什么叫现代化商品，上海本土工业很快接过这套方法：用自己的工厂、商标、香味和广告，把现代生活重写成国货版本。</p>
+      <div class="four-grid">
+        <article class="fact" data-mark="厂"><strong>1912</strong><p>方液仙在上海创办中国化学工业社，做牙粉、雪花膏、肥皂，把工业方法翻译成本土话语。</p></article>
+        <article class="fact" data-mark="香"><strong>1928</strong><p>中央香皂厂推出蜂花檀香皂。檀香不是简单模仿玫瑰和薰衣草，而是中国人闻得懂的东方味道。</p></article>
+        <article class="fact" data-mark="货"><strong>同台</strong><p>五洲固本皂、三星牌牙膏、双妹牌雪花膏站上货架：标准可以学，机器可以买，关键是谁定义体面的中国人。</p></article>
+        <article class="fact" data-mark="画"><strong>广告</strong><p>中文商标、旗袍、盘发、中式庭院进入月份牌。香皂不只洗污垢，也开始把味道讲成故事。</p></article>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="planned">
     <div class="inner">
       <div class="eyebrow"><span class="badge">🧾 Planned Cleanliness</span></div>
@@ -732,36 +766,46 @@
     </div>
   </section>
 
-  <section class="section" id="structure">
+  <section class="section dark" id="market">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">📽️ Two-Part Story</span></div>
-      <h2 class="headline">从近代香史，到现代香产业。</h2>
-      <div class="timeline" style="grid-template-columns: repeat(5, minmax(0, 1fr));">
-        <article class="node"><div class="year">01</div><p>外资香皂打开市场，也改变“干净”的社会意义。</p></article>
-        <article class="node"><div class="year">02</div><p>殖民与现代商业抢先定义“现代生活”。</p></article>
-        <article class="node"><div class="year">03</div><p>民族工业用工厂、商标和广告重写国货版本。</p></article>
-        <article class="node"><div class="year">04</div><p>计划经济把清洁放进共同生活秩序。</p></article>
-        <article class="node"><div class="year">05</div><p>市场经济把香异化成情绪溢价和商品奇观。</p></article>
+      <div class="eyebrow"><span class="badge">💸 Commodity Spectacle</span></div>
+      <h2 class="headline" style="font-size: clamp(40px, 5.8vw, 86px); max-width: 1180px;">当香不再证明“我干净”，而是暗示“我是谁”。</h2>
+      <p class="lede">市场经济打开新的消费空间，香被从功能里拆出来，重新装进故事里。奇观与日常之间的差价，就是今天都市人为情绪、身份和欲望支付的溢价。</p>
+      <div class="four-grid">
+        <article class="fact" data-mark="60"><strong>配方</strong><p>全球约 60% 香氛洗护、30%-40% 中高端香水的香精配方来自少数国际香精公司，它们也在上海设研发中心。</p></article>
+        <article class="fact" data-mark="基"><strong>香基</strong><p>同一套白麝香、青草花香框架，可能出现在 19.9 元沐浴露、200 元国产香水和千元沙龙香里。</p></article>
+        <article class="fact" data-mark="展"><strong>策展</strong><p>今天的香氛店像小型美术馆。消费者不是买日用品，而是在闻“雨后的衡山路”“旧书”“烧柴火”。</p></article>
+        <article class="fact" data-mark="梦"><strong>摆设</strong><p>香薰蜡烛不一定被点燃。它不为你照明，它为你证明：你过着一种会点蜡烛的生活。</p></article>
       </div>
     </div>
   </section>
 
   <section class="section dark" id="final">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">✨ Thesis</span></div>
-      <h2 class="quote">一百年前，上海人用香皂学习现代生活；一百年后，年轻人用香水想象上海生活。</h2>
-      <p class="lede">香味变了，但它一直在回答同一个问题：我们想成为什么样的城市人？</p>
+      <div class="eyebrow"><span class="badge">✨ Final Question</span></div>
+      <h2 class="quote">你闻到的，到底是谁的上海？</h2>
+      <p class="lede">从老式药皂的消毒味，到弄堂里的洗衣粉味；从商场一楼的香水柜台，到小红书上的年度最爱香氛。有些味道属于集体记忆，有些味道属于个人幻觉，但大部分味道，属于定价。</p>
+      <div class="stack" style="margin-top: 30px; max-width: 980px;">
+        <div class="pill">你为香味花的每一分钱，都在回答一个问题：你希望自己是谁？</div>
+        <div class="pill">上海从不只有一种味道，只是消费社会替你选了一种最方便卖的。</div>
+        <div class="pill">下次拿起香水前，先问三秒：我闻到的是香味，还是一个被策划好的自己？</div>
+      </div>
     </div>
   </section>
 
   <script>
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+    window.addEventListener("load", () => window.scrollTo(0, 0), { once: true });
+
     const bar = document.querySelector(".bar");
     const sections = Array.from(document.querySelectorAll(".section"));
 
     document.querySelectorAll(".reel-strip").forEach(strip => {
       const item = strip.querySelector(".reel-item");
+      const itemCount = strip.querySelectorAll(".reel-item").length;
       const h = item ? item.getBoundingClientRect().height : 180;
-      strip.style.setProperty("--spin", `${h * 4}px`);
+      strip.style.setProperty("--spin", `${h * Math.max(0, itemCount - 1)}px`);
     });
 
     const wrap = document.querySelector(".perfume-wrap");
@@ -792,6 +836,7 @@
       const slotSection = document.querySelector("#slot");
       const reels = Array.from(document.querySelectorAll(".reel"));
       const reelStrips = Array.from(document.querySelectorAll(".reel-strip"));
+      let slotTimeline;
 
       gsap.set(".today", { y: 40, scale: .94, autoAlpha: 0 });
       gsap.set(".slot-win-line", { scaleX: .44, autoAlpha: .28 });
@@ -800,7 +845,7 @@
         reelStrips.forEach((strip, index) => {
           strip.style.animation = "none";
           strip.offsetHeight;
-          strip.style.animation = `reelSpin ${2.25 + index * 0.36}s cubic-bezier(.1,.78,.12,1) both`;
+          strip.style.animation = `reelSpin ${3.05 + index * 0.42}s cubic-bezier(.08,.76,.12,1) both`;
         });
       }
 
@@ -835,16 +880,18 @@
 
       function playSlotShow() {
         if (!slot) return;
+        if (slotTimeline) slotTimeline.kill();
+        gsap.killTweensOf([".ding", ".lever", ".slot-win-line", ".today", reels]);
         restartReels();
         slot.classList.add("hot");
         window.setTimeout(() => slot.classList.remove("hot"), 1150);
 
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.fromTo(".ding", { y: -18, rotation: -7, scale: .92 }, { y: 0, rotation: -2, scale: 1.04, duration: .28 })
+        slotTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+        slotTimeline.fromTo(".ding", { y: -18, rotation: -7, scale: .92 }, { y: 0, rotation: -2, scale: 1.04, duration: .28 })
           .fromTo(".lever", { rotation: -8 }, { rotation: 38, duration: .24, ease: "power2.in" }, "<")
           .to(".lever", { rotation: -6, duration: .38, ease: "elastic.out(1, .38)" })
           .fromTo(reels, { y: -8, scaleY: 1.06 }, { y: 0, scaleY: 1, stagger: .08, duration: .42, ease: "back.out(2)" }, "-=.18")
-          .fromTo(".slot-win-line", { autoAlpha: .25, scaleX: .35 }, { autoAlpha: 1, scaleX: 1, duration: .46, ease: "power4.out" }, "+=1.75")
+          .fromTo(".slot-win-line", { autoAlpha: .25, scaleX: .35 }, { autoAlpha: 1, scaleX: 1, duration: .46, ease: "power4.out" }, "+=2.55")
           .fromTo(".today", { y: 40, autoAlpha: 0, scale: .94 }, { y: 0, autoAlpha: 1, scale: 1, duration: .56, ease: "back.out(1.8)" }, "-=.18")
           .add(slotBurst, "-=.18")
           .to(".slot-win-line", { autoAlpha: .55, duration: .32 }, "+=.2");
@@ -857,7 +904,7 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting || entry.target.dataset.done) return;
           entry.target.dataset.done = "1";
-          gsap.from(entry.target.querySelectorAll(".node, .pill, .quote, .badge"), {
+          gsap.from(entry.target.querySelectorAll(".node, .pill, .quote, .badge, .fact"), {
             y: 42,
             autoAlpha: 0,
             stagger: .08,
@@ -870,10 +917,13 @@
 
       const slotIO = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          if (!entry.isIntersecting) return;
-          if (slotSection.dataset.slotPlayed) return;
-          slotSection.dataset.slotPlayed = "1";
-          window.setTimeout(playSlotShow, 220);
+          if (entry.isIntersecting) {
+            if (slotSection.dataset.slotActive) return;
+            slotSection.dataset.slotActive = "1";
+            window.setTimeout(playSlotShow, 160);
+          } else {
+            delete slotSection.dataset.slotActive;
+          }
         });
       }, { threshold: .55 });
       if (slotSection) slotIO.observe(slotSection);
