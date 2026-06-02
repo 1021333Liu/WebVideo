@@ -786,7 +786,8 @@
       max-width: 1180px;
     }
     #final .quote,
-    #final-close .quote {
+    #final-close .quote,
+    #final-memory .quote {
       max-width: 980px;
       font-size: clamp(58px, 7vw, 96px);
       line-height: 1.05;
@@ -799,7 +800,8 @@
       display: block;
     }
     #final .lede,
-    #final-close .lede {
+    #final-close .lede,
+    #final-memory .lede {
       max-width: 1040px;
       font-size: clamp(22px, 2.1vw, 34px);
       line-height: 1.72;
@@ -943,6 +945,82 @@
     .final-line.question {
       color: #e5b873;
     }
+    #final-close .inner {
+      display: grid;
+      align-content: center;
+      min-height: 82vh;
+    }
+    #final-close .quote {
+      max-width: 1120px;
+      font-size: clamp(54px, 6.4vw, 104px);
+    }
+    .question-layout {
+      display: grid;
+      grid-template-columns: minmax(240px, .86fr) minmax(440px, 1.14fr);
+      gap: clamp(34px, 5vw, 84px);
+      align-items: end;
+      margin-top: clamp(42px, 6vw, 78px);
+      max-width: 1120px;
+    }
+    .final-side-note {
+      display: grid;
+      gap: 18px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(229,184,115,.42);
+      color: rgba(247,236,218,.64);
+      font-size: clamp(15px, 1.25vw, 19px);
+      line-height: 1.85;
+      font-weight: 850;
+    }
+    .final-side-note b {
+      color: #e5b873;
+      font-family: "SimSun", serif;
+      font-size: clamp(28px, 3.2vw, 46px);
+      line-height: 1.12;
+      font-weight: 900;
+    }
+    .final-question-card {
+      display: grid;
+      gap: 18px;
+      justify-items: start;
+    }
+    .final-question-kicker {
+      color: #e5b873;
+      font-size: clamp(18px, 1.7vw, 26px);
+      line-height: 1.35;
+      font-weight: 950;
+    }
+    .final-question {
+      font-family: "SimSun", serif;
+      color: #f7ecda;
+      font-size: clamp(38px, 4.6vw, 70px);
+      line-height: 1.16;
+      font-weight: 900;
+    }
+    .final-question span {
+      display: block;
+    }
+    .final-question .dim {
+      color: rgba(247,236,218,.5);
+    }
+    .memory-statement {
+      display: grid;
+      gap: clamp(18px, 2.4vw, 34px);
+      max-width: 1180px;
+    }
+    .memory-line {
+      display: block;
+      font-family: "SimSun", serif;
+      font-size: clamp(48px, 6vw, 96px);
+      line-height: 1.08;
+      font-weight: 900;
+      color: #f7ecda;
+      white-space: nowrap;
+    }
+    .memory-line:nth-child(2) {
+      padding-left: clamp(48px, 9vw, 150px);
+      color: #e5b873;
+    }
 
     @media (max-width: 900px) {
       html { scroll-snap-type: none; }
@@ -958,6 +1036,12 @@
       .poster, .lever { display: none; }
       .hint, .side-nav { display: none; }
       .big-quote { font-size: clamp(44px, 12vw, 72px); }
+      .question-layout { grid-template-columns: 1fr; }
+      .memory-line,
+      .memory-line:nth-child(2) {
+        padding-left: 0;
+        white-space: normal;
+      }
     }
   </style>
 </head>
@@ -1154,11 +1238,30 @@
     <div class="inner">
       <div class="eyebrow"><span class="badge">Final Question</span></div>
       <h2 class="quote"><span class="final-title-line">香味从来不只是香味</span><span class="final-title-line">它也在替城市写人设</span></h2>
-      <div class="final-lines">
-        <div class="final-line small">一百年前，上海人用香皂学习现代生活；一百年后，年轻人用香水想象上海生活。</div>
-        <div class="final-line">上海从不只有一种味道</div>
-        <div class="final-line">只是消费社会 替你选了一种最方便卖的</div>
-        <div class="final-line small question">下次你拿起一瓶香水之前，可以问自己三秒钟：<br>我闻到的，是香味<br>还是一个被策划好的、关于我自己的、限时特供的想象</div>
+      <div class="question-layout">
+        <div class="final-side-note">
+          <b>上海从不只有一种味道</b>
+          <span>只是消费社会 替你选了一种最方便卖的</span>
+        </div>
+        <div class="final-question-card">
+          <div class="final-question-kicker">下次你拿起一瓶香水之前 可以问自己三秒钟</div>
+          <div class="final-question">
+            <span class="dim">我闻到的 是香味</span>
+            <span>还是一个被策划好的</span>
+            <span>关于我自己的</span>
+            <span>限时特供的想象</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark quote-section" id="final-memory">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">Final Line</span></div>
+      <div class="memory-statement">
+        <span class="memory-line">一百年前 上海人用香皂学习现代生活</span>
+        <span class="memory-line">一百年后 年轻人用香水想象上海生活</span>
       </div>
     </div>
   </section>
@@ -1323,7 +1426,7 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting || entry.target.dataset.done) return;
           entry.target.dataset.done = "1";
-          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap, .keyword, .big-quote span, .flow-item, .flow-arrow, .final-line"), {
+          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap, .keyword, .big-quote span, .flow-item, .flow-arrow, .final-line, .final-side-note, .final-question-kicker, .final-question span, .memory-line"), {
             y: 54,
             autoAlpha: 0,
             filter: "blur(10px)",
@@ -1352,6 +1455,7 @@
           : id === "meaning-shift" ? "planned"
           : id === "market" ? "quote-market"
           : id === "final-close" ? "final"
+          : id === "final-memory" ? "final"
           : id;
 
         navLinks.forEach(link => {
