@@ -769,7 +769,7 @@
       box-shadow: 0 18px 46px rgba(0,0,0,.18);
     }
     #market .fact strong {
-      color: #c94a45;
+      color: #e5b873;
       font-size: clamp(32px, 3vw, 44px);
     }
     #national .headline {
@@ -777,10 +777,16 @@
       line-height: 1.04;
       max-width: 1120px !important;
     }
-    #final .inner {
+    .headline-line {
+      display: block;
+      white-space: nowrap;
+    }
+    #final .inner,
+    #final-close .inner {
       max-width: 1180px;
     }
-    #final .quote {
+    #final .quote,
+    #final-close .quote {
       max-width: 980px;
       font-size: clamp(58px, 7vw, 96px);
       line-height: 1.05;
@@ -792,12 +798,14 @@
     .quote-line {
       display: block;
     }
-    #final .lede {
+    #final .lede,
+    #final-close .lede {
       max-width: 1040px;
       font-size: clamp(22px, 2.1vw, 34px);
       line-height: 1.72;
     }
-    #final .stack {
+    #final .stack,
+    #final-close .stack {
       max-width: 1080px !important;
       gap: 18px;
     }
@@ -901,6 +909,10 @@
       font-weight: 900;
       color: #f7ecda;
     }
+    .flow-line {
+      display: block;
+      white-space: nowrap;
+    }
     .flow-arrow {
       color: rgba(229,184,115,.72);
       font-size: clamp(24px, 3vw, 42px);
@@ -982,7 +994,7 @@
       </div>
       <div>
         <div class="eyebrow"><span class="badge">Cost Breakdown</span></div>
-        <h1 class="headline intro-title"><span class="intro-title-line">一瓶 899 元的香水，</span><span class="intro-title-line">真正贵的是什么？</span></h1>
+        <h1 class="headline intro-title"><span class="intro-title-line">一瓶 899 元的香水</span><span class="intro-title-line">真正贵的是什么</span></h1>
         <p class="lede">它叫“雨后梧桐”。它说自己像武康路的傍晚，像老洋房窗边的白衬衫，像一个人下班后不想解释的疲惫。</p>
         <div class="soap-grid"><span class="mini">情绪溢价</span><span class="mini">体面外套</span><span class="mini">上海幻想</span></div>
       </div>
@@ -1010,7 +1022,7 @@
       <div class="soap">香皂</div>
       <div>
         <div class="eyebrow"><span class="badge">The Reverse</span></div>
-        <h2 class="headline">这件事，要从一块香皂说起。</h2>
+        <h2 class="headline"><span class="headline-line">这件事</span><span class="headline-line">要从一块香皂说起</span></h2>
         <p class="lede">不是中国从零开始学会“香”，而是近代上海把家庭、礼俗和身体里的清洁，放进了洋行、百货、广告和公共卫生组成的新系统。</p>
         <div class="keyword-row"><span class="keyword">开埠</span><span class="keyword">洋行</span><span class="keyword">百货</span><span class="keyword">广告</span><span class="keyword">清洁</span></div>
       </div>
@@ -1056,7 +1068,7 @@
   <section class="section" id="national">
     <div class="inner">
       <div class="eyebrow"><span class="badge">National Brands</span></div>
-      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">从工业制皂到本土广告，香味第一次被讲成了故事。</h2>
+      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;"><span class="headline-line">从工业制皂到本土广告</span><span class="headline-line">香味第一次被讲成了故事</span></h2>
       <p class="lede">外资先教会市场什么叫现代化商品，上海本土工业很快接过这套方法：用自己的工厂、商标、香味和广告，把现代生活重写成国货版本。</p>
       <div class="keyword-row"><span class="keyword">民族工业</span><span class="keyword">蜂花</span><span class="keyword">双妹</span><span class="keyword">檀香</span><span class="keyword">本土化</span></div>
       <div class="four-grid">
@@ -1078,7 +1090,7 @@
   <section class="section" id="planned">
     <div class="inner">
       <div class="eyebrow"><span class="badge">Planned Cleanliness</span></div>
-      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">计划经济时代，香先被改造成“干净的共同秩序”。</h2>
+      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;"><span class="headline-line">计划经济时代</span><span class="headline-line">香先被改造成“干净的共同秩序”</span></h2>
       <p class="lede">不是国家突然给每个人发浪漫，而是公共卫生运动、计划生产和户口供应，把肥皂、药皂、洗衣粉放进了普通人的日常管理。</p>
       <div class="keyword-row"><span class="keyword">卫生运动</span><span class="keyword">定量供应</span><span class="keyword">药皂</span><span class="keyword">白猫</span><span class="keyword">秩序</span></div>
       <div class="four-grid">
@@ -1095,11 +1107,11 @@
       <div class="eyebrow"><span class="badge">Meaning Shift</span></div>
       <h2 class="big-quote"><span>香味的意义</span><span>一直在变化</span></h2>
       <div class="thesis-flow">
-        <div class="flow-item"><div class="flow-era">近代上海</div><div class="flow-value">香味从家庭走向摩登</div></div>
+        <div class="flow-item"><div class="flow-era">近代上海</div><div class="flow-value"><span class="flow-line">香味从家庭</span><span class="flow-line">走向摩登</span></div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-item"><div class="flow-era">计划经济</div><div class="flow-value">香味从摩登走向集体的干净生活方式</div></div>
+        <div class="flow-item"><div class="flow-era">计划经济</div><div class="flow-value"><span class="flow-line">香味从摩登</span><span class="flow-line">走向集体的干净生活方式</span></div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-item"><div class="flow-era">消费社会</div><div class="flow-value">香味从集体生活方式上升为商品消费</div></div>
+        <div class="flow-item"><div class="flow-era">消费社会</div><div class="flow-value"><span class="flow-line">香味从集体生活方式</span><span class="flow-line">上升为商品消费</span></div></div>
       </div>
     </div>
   </section>
@@ -1114,7 +1126,7 @@
   <section class="section dark" id="market">
     <div class="inner">
       <div class="eyebrow"><span class="badge">Commodity Spectacle</span></div>
-      <h2 class="headline" style="font-size: clamp(40px, 5.8vw, 86px); max-width: 1180px;">当香不再证明“我干净”，而是暗示“我是谁”。</h2>
+      <h2 class="headline" style="font-size: clamp(40px, 5.8vw, 86px); max-width: 1180px;"><span class="headline-line">当香不再证明“我干净”</span><span class="headline-line">而是暗示“我是谁”</span></h2>
       <p class="lede">市场经济打开新的消费空间，香被从功能里拆出来，重新装进故事里。奇观与日常之间的差价，就是今天都市人为情绪、身份和欲望支付的溢价。</p>
       <div class="keyword-row"><span class="keyword">香氛消费</span><span class="keyword">商品奇观</span><span class="keyword">情绪溢价</span><span class="keyword">身份</span><span class="keyword">定价</span></div>
       <div class="four-grid">
@@ -1129,15 +1141,24 @@
   <section class="section dark" id="final">
     <div class="inner">
       <div class="eyebrow"><span class="badge">Final Question</span></div>
-      <h2 class="quote"><span class="final-title-line">你闻到的，</span><span class="final-title-line">到底是谁的上海？</span></h2>
+      <h2 class="quote"><span class="final-title-line">你闻到的</span><span class="final-title-line">到底是谁的上海</span></h2>
       <div class="final-lines">
-        <div class="final-line muted">有些味道，属于集体记忆</div>
-        <div class="final-line muted">有些味道，属于个人幻觉</div>
-        <div class="final-line strong">但大部分味道，属于定价</div>
+        <div class="final-line muted">有些味道 属于集体记忆</div>
+        <div class="final-line muted">有些味道 属于个人幻觉</div>
+        <div class="final-line strong">但大部分味道 属于定价</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="final-close">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">Final Question</span></div>
+      <h2 class="quote"><span class="final-title-line">香味从来不只是香味</span><span class="final-title-line">它也在替城市写人设</span></h2>
+      <div class="final-lines">
         <div class="final-line small">一百年前，上海人用香皂学习现代生活；一百年后，年轻人用香水想象上海生活。</div>
         <div class="final-line">上海从不只有一种味道</div>
-        <div class="final-line">只是消费社会，替你选了一种最方便卖的</div>
-        <div class="final-line small question">下次你拿起一瓶香水之前，可以问自己三秒钟：我闻到的，是香味。还是一个被策划好的、关于我自己的、限时特供的想象？</div>
+        <div class="final-line">只是消费社会 替你选了一种最方便卖的</div>
+        <div class="final-line small question">下次你拿起一瓶香水之前，可以问自己三秒钟：<br>我闻到的，是香味<br>还是一个被策划好的、关于我自己的、限时特供的想象</div>
       </div>
     </div>
   </section>
@@ -1330,6 +1351,7 @@
           : id === "quote-national" ? "national"
           : id === "meaning-shift" ? "planned"
           : id === "market" ? "quote-market"
+          : id === "final-close" ? "final"
           : id;
 
         navLinks.forEach(link => {
