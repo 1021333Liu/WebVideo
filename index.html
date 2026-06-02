@@ -896,7 +896,8 @@
     }
     .flow-value {
       font-family: "SimSun", serif;
-      font-size: clamp(38px, 5vw, 72px);
+      font-size: clamp(28px, 3.2vw, 48px);
+      line-height: 1.18;
       font-weight: 900;
       color: #f7ecda;
     }
@@ -920,6 +921,16 @@
     }
     .final-line.muted { color: rgba(247,236,218,.62); }
     .final-line.strong { color: #e5b873; }
+    .final-line.small {
+      font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      font-size: clamp(20px, 2vw, 30px);
+      line-height: 1.6;
+      font-weight: 850;
+      color: rgba(247,236,218,.76);
+    }
+    .final-line.question {
+      color: #e5b873;
+    }
 
     @media (max-width: 900px) {
       html { scroll-snap-type: none; }
@@ -1084,11 +1095,11 @@
       <div class="eyebrow"><span class="badge">Meaning Shift</span></div>
       <h2 class="big-quote"><span>香味的意义</span><span>一直在变化</span></h2>
       <div class="thesis-flow">
-        <div class="flow-item"><div class="flow-era">近代上海</div><div class="flow-value">香味 = 清洁</div></div>
+        <div class="flow-item"><div class="flow-era">近代上海</div><div class="flow-value">香味从家庭走向摩登</div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-item"><div class="flow-era">计划经济</div><div class="flow-value">香味 = 卫生</div></div>
+        <div class="flow-item"><div class="flow-era">计划经济</div><div class="flow-value">香味从摩登走向集体的干净生活方式</div></div>
         <div class="flow-arrow">↓</div>
-        <div class="flow-item"><div class="flow-era">消费社会</div><div class="flow-value">香味 = 身份</div></div>
+        <div class="flow-item"><div class="flow-era">消费社会</div><div class="flow-value">香味从集体生活方式上升为商品消费</div></div>
       </div>
     </div>
   </section>
@@ -1123,8 +1134,10 @@
         <div class="final-line muted">有些味道，属于集体记忆</div>
         <div class="final-line muted">有些味道，属于个人幻觉</div>
         <div class="final-line strong">但大部分味道，属于定价</div>
+        <div class="final-line small">一百年前，上海人用香皂学习现代生活；一百年后，年轻人用香水想象上海生活。</div>
         <div class="final-line">上海从不只有一种味道</div>
         <div class="final-line">只是消费社会，替你选了一种最方便卖的</div>
+        <div class="final-line small question">下次你拿起一瓶香水之前，可以问自己三秒钟：我闻到的，是香味。还是一个被策划好的、关于我自己的、限时特供的想象？</div>
       </div>
     </div>
   </section>
