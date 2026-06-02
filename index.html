@@ -948,24 +948,28 @@
     #final-close .inner {
       display: grid;
       align-content: center;
-      min-height: 82vh;
+      min-height: 84vh;
+      max-width: 1220px;
     }
     #final-close .quote {
-      max-width: 1120px;
-      font-size: clamp(54px, 6.4vw, 104px);
+      max-width: 980px;
+      font-size: clamp(42px, 4.8vw, 72px);
+      line-height: 1.1;
     }
     .question-layout {
       display: grid;
-      grid-template-columns: minmax(240px, .86fr) minmax(440px, 1.14fr);
-      gap: clamp(34px, 5vw, 84px);
-      align-items: end;
-      margin-top: clamp(42px, 6vw, 78px);
-      max-width: 1120px;
+      grid-template-columns: minmax(320px, .88fr) minmax(460px, 1.12fr);
+      gap: clamp(38px, 5vw, 76px);
+      align-items: center;
+      margin-top: clamp(34px, 4.4vw, 58px);
+      max-width: 1180px;
     }
     .final-side-note {
       display: grid;
-      gap: 18px;
-      padding-top: 26px;
+      gap: 16px;
+      align-self: end;
+      max-width: 450px;
+      padding-top: 24px;
       border-top: 1px solid rgba(229,184,115,.42);
       color: rgba(247,236,218,.64);
       font-size: clamp(15px, 1.25vw, 19px);
@@ -975,8 +979,8 @@
     .final-side-note b {
       color: #e5b873;
       font-family: "SimSun", serif;
-      font-size: clamp(28px, 3.2vw, 46px);
-      line-height: 1.12;
+      font-size: clamp(28px, 3vw, 44px);
+      line-height: 1.14;
       font-weight: 900;
     }
     .final-question-card {
@@ -986,16 +990,17 @@
     }
     .final-question-kicker {
       color: #e5b873;
-      font-size: clamp(18px, 1.7vw, 26px);
+      font-size: clamp(16px, 1.35vw, 22px);
       line-height: 1.35;
       font-weight: 950;
     }
     .final-question {
       font-family: "SimSun", serif;
       color: #f7ecda;
-      font-size: clamp(38px, 4.6vw, 70px);
-      line-height: 1.16;
+      font-size: clamp(30px, 3.25vw, 50px);
+      line-height: 1.18;
       font-weight: 900;
+      max-width: 620px;
     }
     .final-question span {
       display: block;
@@ -1003,23 +1008,34 @@
     .final-question .dim {
       color: rgba(247,236,218,.5);
     }
+    .final-question .gold {
+      color: #e5b873;
+    }
     .memory-statement {
       display: grid;
-      gap: clamp(18px, 2.4vw, 34px);
-      max-width: 1180px;
+      gap: clamp(10px, 1.35vw, 20px);
+      max-width: 1040px;
+      justify-items: start;
     }
     .memory-line {
       display: block;
       font-family: "SimSun", serif;
-      font-size: clamp(48px, 6vw, 96px);
+      font-size: clamp(36px, 4.35vw, 68px);
       line-height: 1.08;
       font-weight: 900;
       color: #f7ecda;
-      white-space: nowrap;
     }
-    .memory-line:nth-child(2) {
-      padding-left: clamp(48px, 9vw, 150px);
+    .memory-line.gold {
       color: #e5b873;
+    }
+    .memory-line.indent {
+      padding-left: clamp(36px, 6vw, 96px);
+    }
+    #final-memory .inner {
+      display: grid;
+      align-content: center;
+      min-height: 78vh;
+      max-width: 1120px;
     }
 
     @media (max-width: 900px) {
@@ -1249,7 +1265,7 @@
             <span class="dim">我闻到的 是香味</span>
             <span>还是一个被策划好的</span>
             <span>关于我自己的</span>
-            <span>限时特供的想象</span>
+            <span class="gold">限时特供的想象</span>
           </div>
         </div>
       </div>
@@ -1260,16 +1276,22 @@
     <div class="inner">
       <div class="eyebrow"><span class="badge">Final Line</span></div>
       <div class="memory-statement">
-        <span class="memory-line">一百年前 上海人用香皂学习现代生活</span>
-        <span class="memory-line">一百年后 年轻人用香水想象上海生活</span>
+        <span class="memory-line">一百年前</span>
+        <span class="memory-line indent">上海人用香皂</span>
+        <span class="memory-line indent">学习现代生活</span>
+        <span class="memory-line gold">一百年后</span>
+        <span class="memory-line gold indent">年轻人用香水</span>
+        <span class="memory-line gold indent">想象上海生活</span>
       </div>
     </div>
   </section>
 
   <script>
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
-    window.addEventListener("load", () => window.scrollTo(0, 0), { once: true });
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+      window.addEventListener("load", () => window.scrollTo(0, 0), { once: true });
+    }
 
     const bar = document.querySelector(".bar");
     const sections = Array.from(document.querySelectorAll(".section"));
