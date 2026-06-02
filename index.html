@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>小香味，大上海 | 高级视觉版</title>
+  <script src="assets/gsap.min.js"></script>
+  <style>
+    :root {
+      --ink: #16120e;
+      --paper: #f4ead8;
+      --vellum: rgba(244, 234, 216, 0.78);
+      --jade: #1f665b;
+      --jade2: #87b7a8;
+      --cinnabar: #9c2f2f;
+      --brass: #b47b36;
+      --night: #111820;
+      --line: rgba(22, 18, 14, 0.16);
+      --glow: rgba(135, 183, 168, 0.46);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      background: var(--paper);
+    }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 78% 18%, rgba(31, 102, 91, 0.28), transparent 30rem),
+        radial-gradient(circle at 13% 84%, rgba(180, 123, 54, 0.20), transparent 32rem),
+        linear-gradient(135deg, #fbf3e4 0%, #eee0c9 52%, #cbded6 100%);
+      font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(22,18,14,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22,18,14,0.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at 50% 44%, #000 0%, transparent 78%);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.14;
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0 9px, rgba(22,18,14,0.16) 10px),
+        radial-gradient(circle at 22% 18%, #fff, transparent 26rem);
+      mix-blend-mode: multiply;
+    }
+
+    .hud {
+      position: fixed;
+      z-index: 30;
+      top: 18px;
+      left: 28px;
+      right: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      pointer-events: none;
+    }
+    .brand {
+      padding: 8px 12px;
+      background: rgba(244,234,216,0.68);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+    .rail { flex: 1; height: 3px; background: rgba(22,18,14,0.12); overflow: hidden; }
+    .bar { width: 0%; height: 100%; background: var(--cinnabar); }
+    .hint { font-size: 12px; color: rgba(22,18,14,.56); white-space: nowrap; }
+
+    .section {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(24px, 7vw) minmax(0, 1fr) minmax(24px, 7vw);
+      align-items: center;
+      padding: 98px 0 70px;
+      overflow: hidden;
+    }
+    .inner {
+      grid-column: 2;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    .dark {
+      color: #f7ecda;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(180,123,54,.27), transparent 24rem),
+        radial-gradient(circle at 14% 82%, rgba(31,102,91,.35), transparent 30rem),
+        linear-gradient(135deg, #111820 0%, #17120e 74%);
+    }
+    h1, h2, p { margin: 0; }
+    .eyebrow {
+      color: var(--cinnabar);
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      font-size: clamp(13px, 1.1vw, 17px);
+    }
+    .dark .eyebrow { color: #e5b873; }
+    .headline {
+      font-family: "SimSun", "Songti SC", serif;
+      font-size: clamp(48px, 7.6vw, 110px);
+      line-height: .98;
+      font-weight: 900;
+      letter-spacing: 0;
+      max-width: 1120px;
+    }
+    .lede {
+      margin-top: 26px;
+      max-width: 880px;
+      color: rgba(22,18,14,.72);
+      font-size: clamp(18px, 1.75vw, 25px);
+      line-height: 1.66;
+      font-weight: 520;
+    }
+    .dark .lede { color: rgba(247,236,218,.76); }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(360px, .92fr) minmax(420px, 1.08fr);
+      gap: min(6vw, 80px);
+      align-items: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      background: rgba(244,234,216,.74);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 26px rgba(22,18,14,.08);
+      font-weight: 900;
+    }
+    .dark .badge { background: rgba(247,236,218,.10); border-color: rgba(247,236,218,.18); }
+
+    .perfume-wrap {
+      position: relative;
+      min-height: 650px;
+      display: grid;
+      place-items: center;
+      perspective: 1200px;
+    }
+    .orbit {
+      position: absolute;
+      width: min(560px, 46vw);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid rgba(31,102,91,.26);
+      box-shadow: inset 0 0 80px rgba(31,102,91,.13), 0 0 100px var(--glow);
+      animation: orbit 18s linear infinite;
+    }
+    .orbit.small {
+      width: min(420px, 34vw);
+      border-color: rgba(156,47,47,.18);
+      animation-duration: 12s;
+      animation-direction: reverse;
+    }
+    @keyframes orbit { to { transform: rotate(1turn); } }
+    .perfume {
+      width: min(330px, 32vw);
+      aspect-ratio: .62;
+      border-radius: 30px 30px 18px 18px;
+      border: 2px solid rgba(22,18,14,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.82), rgba(216,239,230,.44) 48%, rgba(31,102,91,.18)),
+        linear-gradient(90deg, rgba(255,255,255,.72), transparent 37%, rgba(255,255,255,.48));
+      box-shadow: 0 44px 100px rgba(31,102,91,.28), inset 0 0 44px rgba(255,255,255,.58);
+      position: relative;
+      transform-style: preserve-3d;
+      animation: bottleFloat 3.4s ease-in-out infinite alternate;
+    }
+    @keyframes bottleFloat {
+      from { transform: translateY(12px) rotateY(-8deg); }
+      to { transform: translateY(-16px) rotateY(8deg); }
+    }
+    .perfume::before {
+      content: "";
+      position: absolute;
+      width: 42%;
+      height: 54px;
+      left: 29%;
+      top: -58px;
+      background: linear-gradient(180deg, #d8c7a9, #66513e);
+      border-radius: 8px 8px 3px 3px;
+      box-shadow: 0 -14px 0 #17120e;
+    }
+    .perfume::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 24px;
+      background: linear-gradient(120deg, rgba(255,255,255,.56), transparent 38%);
+      pointer-events: none;
+    }
+    .label {
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: 34%;
+      z-index: 2;
+      padding: 26px 18px;
+      text-align: center;
+      border: 1px solid rgba(22,18,14,.28);
+      background: rgba(244,234,216,.72);
+      backdrop-filter: blur(6px);
+    }
+    .label b {
+      display: block;
+      font-size: clamp(24px, 3vw, 36px);
+      font-family: "SimSun", serif;
+      font-weight: 900;
+    }
+    .label span { display: block; margin-top: 10px; font-size: 14px; letter-spacing: .16em; }
+    .chip {
+      position: absolute;
+      padding: 9px 13px;
+      border: 1px solid rgba(22,18,14,.18);
+      background: rgba(244,234,216,.88);
+      box-shadow: 0 12px 28px rgba(22,18,14,.12);
+      font-weight: 900;
+      animation: chipPulse 2.8s ease-in-out infinite alternate;
+    }
+    .chip:nth-of-type(1) { left: 0; top: 17%; }
+    .chip:nth-of-type(2) { right: 0; top: 20%; animation-delay: .2s; }
+    .chip:nth-of-type(3) { left: 4%; bottom: 25%; animation-delay: .4s; }
+    .chip:nth-of-type(4) { right: 5%; bottom: 23%; animation-delay: .6s; }
+    .chip:nth-of-type(5) { left: 33%; bottom: 4%; animation-delay: .8s; }
+    .chip:nth-of-type(6) { left: 38%; top: 6%; animation-delay: 1s; }
+    @keyframes chipPulse { to { transform: translateY(-9px); } }
+    .mist {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.84);
+      filter: blur(1px);
+      box-shadow: 0 0 18px rgba(216,239,230,.94);
+      animation: mistMove 4.2s ease-in-out infinite alternate;
+    }
+    @keyframes mistMove {
+      from { opacity: .1; transform: translate(0,0) scale(.4); }
+      to { opacity: .78; transform: translate(var(--mx), var(--my)) scale(var(--ms)); }
+    }
+
+    .poster {
+      position: absolute;
+      width: clamp(140px, 16vw, 230px);
+      min-height: 120px;
+      padding: 16px;
+      background: rgba(244,234,216,.76);
+      border: 1px solid rgba(22,18,14,.18);
+      box-shadow: 0 24px 48px rgba(22,18,14,.12);
+      transform: rotate(var(--r));
+      font-family: "SimSun", serif;
+      font-weight: 900;
+      color: rgba(22,18,14,.72);
+    }
+    .poster em {
+      display: block;
+      font-style: normal;
+      margin-top: 10px;
+      font-family: "Microsoft YaHei", sans-serif;
+      font-size: 12px;
+      letter-spacing: .12em;
+      color: rgba(22,18,14,.48);
+    }
+    .p1 { left: 4vw; top: 18vh; --r: -8deg; }
+    .p2 { right: 8vw; bottom: 10vh; --r: 6deg; }
+    .p3 { right: 4vw; top: 16vh; --r: 10deg; }
+
+    .slot-stage { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; }
+    .slot-stage::after {
+      content: "JACKPOT";
+      position: absolute;
+      right: 8vw;
+      top: 12vh;
+      font-family: "SimSun", serif;
+      font-weight: 900;
+      font-size: clamp(40px, 7vw, 110px);
+      color: rgba(247,236,218,.06);
+      letter-spacing: .06em;
+      transform: rotate(7deg);
+      pointer-events: none;
+    }
+    .ding {
+      width: fit-content;
+      padding: 10px 18px;
+      background: var(--cinnabar);
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: .08em;
+      transform: rotate(-2deg);
+      box-shadow: 0 14px 28px rgba(156,47,47,.28);
+    }
+    .slot {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      padding: 18px;
+      border: 2px solid rgba(247,236,218,.78);
+      background:
+        linear-gradient(180deg, #201b16, #0f0d0c),
+        radial-gradient(circle at 42% 18%, rgba(180,123,54,.28), transparent 34%);
+      box-shadow: 0 36px 100px rgba(0,0,0,.40);
+      position: relative;
+      overflow: visible;
+      cursor: pointer;
+      will-change: transform;
+    }
+    .slot.hot {
+      animation: slotShake .32s ease-in-out 3;
+    }
+    @keyframes slotShake {
+      0%, 100% { transform: translateX(0) rotate(0); }
+      25% { transform: translateX(-7px) rotate(-.4deg); }
+      50% { transform: translateX(6px) rotate(.4deg); }
+      75% { transform: translateX(-4px) rotate(-.2deg); }
+    }
+    .slot::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background: conic-gradient(from 90deg, transparent, rgba(244,234,216,.34), transparent 28%);
+      animation: sweep 3.2s linear infinite;
+      pointer-events: none;
+    }
+    .slot::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(229,184,115,.42);
+      box-shadow: 0 0 24px rgba(229,184,115,.32), inset 0 0 18px rgba(229,184,115,.20);
+      pointer-events: none;
+      z-index: 3;
+    }
+    @keyframes sweep { to { transform: rotate(1turn); } }
+    .slot-face {
+      position: absolute;
+      inset: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .slot-win-line {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 50%;
+      height: 4px;
+      z-index: 4;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, transparent, #fff3b0, #c9362d, #fff3b0, transparent);
+      box-shadow: 0 0 24px rgba(255,226,128,.8);
+      pointer-events: none;
+    }
+    .lever {
+      position: absolute;
+      right: -56px;
+      top: 18px;
+      width: 24px;
+      height: 170px;
+      background: linear-gradient(180deg, #d8c7a9, #5a4633);
+      border-radius: 16px;
+      transform-origin: 50% 18px;
+      z-index: 4;
+      box-shadow: 0 12px 30px rgba(0,0,0,.30);
+    }
+    .lever::before {
+      content: "";
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      left: 50%;
+      top: -32px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at 35% 32%, #fff0c9, #bf362e 55%, #6a1716);
+      box-shadow: 0 10px 24px rgba(0,0,0,.38);
+    }
+    .slot-caption {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: -42px;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: rgba(247,236,218,.74);
+      font-size: 13px;
+      letter-spacing: .12em;
+      font-weight: 900;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .reel {
+      height: clamp(132px, 19vh, 188px);
+      overflow: hidden;
+      border: 1px solid rgba(244,234,216,.34);
+      background: #f8f1e5;
+      position: relative;
+      z-index: 2;
+      will-change: transform;
+    }
+    .reel::before,
+    .reel::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 34%;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .reel::before { top: 0; background: linear-gradient(#f8f1e5, transparent); }
+    .reel::after { bottom: 0; background: linear-gradient(transparent, #f8f1e5); }
+    .reel-strip {
+      display: grid;
+      animation: reelSpin 2.4s cubic-bezier(.1,.7,.1,1) both;
+    }
+    .reel:nth-child(2) .reel-strip { animation-duration: 2.8s; }
+    .reel:nth-child(3) .reel-strip { animation-duration: 3.15s; }
+    @keyframes reelSpin { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--spin))); } }
+    .reel-item {
+      height: clamp(132px, 19vh, 188px);
+      display: grid;
+      place-items: center;
+      font-size: clamp(28px, 4.7vw, 60px);
+      font-family: "SimSun", serif;
+      font-weight: 900;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .today {
+      font-family: "SimSun", serif;
+      font-size: clamp(52px, 8vw, 122px);
+      line-height: 1;
+      font-weight: 900;
+    }
+    .jackpot-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .spark {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #f7ecda;
+      box-shadow: 0 0 18px #f7ecda;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .coin {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff2b3, #c3832c 64%, #7a4818);
+      box-shadow: 0 8px 14px rgba(0,0,0,.26);
+      pointer-events: none;
+      z-index: 10;
+    }
+    .coin::after {
+      content: "￥";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 900;
+      color: rgba(74,42,12,.72);
+    }
+
+    .soap {
+      width: min(470px, 40vw);
+      aspect-ratio: 1.72;
+      border-radius: 42px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.84), transparent 22%),
+        linear-gradient(135deg, #e8f7ef, #b7d8cd 60%, #7ba99a);
+      box-shadow: 0 40px 92px rgba(31,102,91,.30), inset 0 -18px 42px rgba(31,102,91,.20);
+      display: grid;
+      place-items: center;
+      font-family: "SimSun", serif;
+      font-size: clamp(42px, 6vw, 78px);
+      font-weight: 900;
+      color: rgba(22,18,14,.74);
+      animation: soapTilt 3.6s ease-in-out infinite alternate;
+    }
+    @keyframes soapTilt { from { transform: rotate(-3deg) translateY(6px); } to { transform: rotate(3deg) translateY(-10px); } }
+    .soap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 28px;
+      max-width: 760px;
+    }
+    .mini {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: rgba(244,234,216,.70);
+      font-weight: 900;
+    }
+    .dark .mini { background: rgba(247,236,218,.10); border-color: rgba(247,236,218,.16); }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .node {
+      min-height: 250px;
+      border: 1px solid var(--line);
+      background: rgba(244,234,216,.62);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 18px 38px rgba(22,18,14,.08);
+    }
+    .dark .node, .dark .pill {
+      background: rgba(247,236,218,.08);
+      border-color: rgba(247,236,218,.16);
+    }
+    .year {
+      font-family: "SimSun", serif;
+      font-weight: 900;
+      font-size: clamp(28px, 3vw, 44px);
+      color: var(--jade);
+    }
+    .dark .year { color: var(--jade2); }
+    .node p {
+      font-size: clamp(14px, 1.15vw, 17px);
+      line-height: 1.58;
+      color: rgba(22,18,14,.74);
+    }
+    .dark .node p { color: rgba(247,236,218,.76); }
+    .stack { display: grid; gap: 12px; }
+    .pill {
+      padding: 16px 18px;
+      border-left: 5px solid var(--cinnabar);
+      background: rgba(244,234,216,.74);
+      font-size: clamp(16px, 1.45vw, 22px);
+      font-weight: 850;
+      box-shadow: 0 16px 34px rgba(22,18,14,.08);
+    }
+    .quote {
+      font-family: "SimSun", serif;
+      font-size: clamp(42px, 6.4vw, 92px);
+      line-height: 1.04;
+      font-weight: 900;
+      max-width: 1120px;
+    }
+    .four-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .fact {
+      min-height: 235px;
+      border: 1px solid var(--line);
+      background: rgba(244,234,216,.68);
+      padding: 20px;
+      box-shadow: 0 20px 42px rgba(22,18,14,.09);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .fact::after {
+      content: attr(data-mark);
+      position: absolute;
+      right: -8px;
+      bottom: -18px;
+      font-family: "SimSun", serif;
+      font-size: 86px;
+      font-weight: 900;
+      color: rgba(22,18,14,.06);
+      pointer-events: none;
+    }
+    .fact strong {
+      font-family: "SimSun", serif;
+      font-size: clamp(32px, 4vw, 56px);
+      color: var(--cinnabar);
+      line-height: 1;
+    }
+    .fact p {
+      font-size: clamp(14px, 1.18vw, 18px);
+      line-height: 1.56;
+      color: rgba(22,18,14,.74);
+    }
+    .dark .fact {
+      background: rgba(247,236,218,.09);
+      border-color: rgba(247,236,218,.16);
+    }
+    .dark .fact p { color: rgba(247,236,218,.75); }
+
+    @media (max-width: 900px) {
+      html { scroll-snap-type: none; }
+      .section { padding: 84px 0 50px; }
+      .split { grid-template-columns: 1fr; }
+      .perfume-wrap { min-height: 450px; }
+      .perfume { width: min(280px, 68vw); }
+      .timeline, .soap-grid, .four-grid { grid-template-columns: 1fr; }
+      .slot { grid-template-columns: 1fr; }
+      .reel, .reel-item { height: 118px; }
+      .soap { width: min(370px, 82vw); }
+      .poster, .lever { display: none; }
+      .hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <div class="brand">小香味，大上海</div>
+    <div class="rail"><div class="bar"></div></div>
+    <div class="hint">上下滚动 / Space</div>
+  </div>
+
+  <section class="section" id="intro">
+    <div class="poster p1">香水成本拆解<em>not a product demo</em></div>
+    <div class="poster p2">雨后梧桐<em>899 RMB</em></div>
+    <div class="inner split">
+      <div class="perfume-wrap">
+        <div class="orbit"></div>
+        <div class="orbit small"></div>
+        <div class="perfume"><div class="label"><b>雨后梧桐</b><span>50ML / 899 RMB</span></div></div>
+        <span class="chip">酒精</span><span class="chip">香精</span><span class="chip">玻璃瓶</span><span class="chip">喷头</span><span class="chip">包装盒</span><span class="chip">品牌故事</span>
+      </div>
+      <div>
+        <div class="eyebrow"><span class="badge">🧪 Cost Breakdown</span></div>
+        <h1 class="headline">一瓶 899 元的香水，真正贵的是什么？</h1>
+        <p class="lede">它叫“雨后梧桐”。它说自己像武康路的傍晚，像老洋房窗边的白衬衫，像一个人下班后不想解释的疲惫。</p>
+        <div class="soap-grid"><span class="mini">💸 情绪溢价</span><span class="mini">🧥 体面外套</span><span class="mini">🏙️ 上海幻想</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="slot">
+    <div class="inner slot-stage">
+      <span class="ding">叮！今天我们讲：上海的香味~</span>
+      <div class="slot">
+        <div class="slot-win-line"></div>
+        <div class="lever"></div>
+        <div class="reel"><div class="reel-strip"><div class="reel-item">酒精</div><div class="reel-item">香精</div><div class="reel-item">广告</div><div class="reel-item">渠道</div><div class="reel-item">情绪</div></div></div>
+        <div class="reel"><div class="reel-strip"><div class="reel-item">成本</div><div class="reel-item">包装</div><div class="reel-item">叙事</div><div class="reel-item">体面</div><div class="reel-item">身份</div></div></div>
+        <div class="reel"><div class="reel-strip"><div class="reel-item">梧桐</div><div class="reel-item">老洋房</div><div class="reel-item">白衬衫</div><div class="reel-item">摩登</div><div class="reel-item">上海幻想</div></div></div>
+        <div class="slot-caption"><span>cost</span><span>story</span><span>city fantasy</span></div>
+      </div>
+      <h2 class="today">今天我们讲：上海的香！</h2>
+    </div>
+  </section>
+
+  <section class="section" id="soap">
+    <div class="poster p3">不是舶来神话<em>cleanliness became identity</em></div>
+    <div class="inner split">
+      <div class="soap">香皂</div>
+      <div>
+        <div class="eyebrow"><span class="badge">🧼 The Reverse</span></div>
+        <h2 class="headline">这件事，要从一块香皂说起。</h2>
+        <p class="lede">不是中国从零开始学会“香”，而是近代上海把家庭、礼俗和身体里的清洁，放进了洋行、百货、广告和公共卫生组成的新系统。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="timeline">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">📰 Imported Soap</span></div>
+      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">外资香皂如何打开上海市场？</h2>
+      <div class="timeline">
+        <article class="node"><div class="year">1881</div><p>《申报》可见祥茂黄肥皂广告，外资肥皂开始进入城市视野。</p></article>
+        <article class="node"><div class="year">1910</div><p>日光肥皂广告出现，品牌、商标、广告话语持续塑造“现代清洁”。</p></article>
+        <article class="node"><div class="year">1923</div><p>利华在上海成立中国肥皂公司，把外资制皂推入本地工业体系。</p></article>
+        <article class="node"><div class="year">1925</div><p>杨树浦新厂投产，工业化配方、包装和产能让肥皂标准化。</p></article>
+        <article class="node"><div class="year">1939</div><p>中国肥皂公司年产量达到两万多吨，规模化生产改写市场。</p></article>
+        <article class="node"><div class="year">相信</div><p>商品不只是用来用的，也是用来相信的。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="mechanism">
+    <div class="inner split">
+      <h2 class="quote">谁有权定义干净，谁就有权定义现代。</h2>
+      <div class="stack">
+        <div class="pill">🏭 工业化商品：配方、包装、商标、价格</div>
+        <div class="pill">🏬 洋行与百货：渠道、橱窗、消费场景</div>
+        <div class="pill">📰 现代广告：卫生、文明、体面、摩登</div>
+        <div class="pill">🚿 公共卫生：身体清洁变成城市秩序</div>
+        <div class="pill">🧭 定义权竞争：外资先定义，本土工业再改写</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="planned">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">🧾 Planned Cleanliness</span></div>
+      <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">计划经济时代，香先被改造成“干净的共同秩序”。</h2>
+      <p class="lede">不是国家突然给每个人发浪漫，而是公共卫生运动、计划生产和户口供应，把肥皂、药皂、洗衣粉放进了普通人的日常管理。</p>
+      <div class="four-grid">
+        <article class="fact" data-mark="卫"><strong>1952</strong><p>爱国卫生运动兴起。卫生从“家里讲不讲究”，变成学校、单位、里弄、街道都要参与的公共事务。</p></article>
+        <article class="fact" data-mark="除"><strong>1958</strong><p>除四害运动展开。干净开始和集体秩序、防疫动员、城市治理绑定在一起。</p></article>
+        <article class="fact" data-mark="厂"><strong>1955-1962</strong><p>上海制皂与洗涤工业进入稳定生产：1955 上海制皂厂定名，1959 上海药皂、工农牌洗衣粉，1962 白猫洗衣粉。</p></article>
+        <article class="fact" data-mark="票"><strong>1972</strong><p>上海肥皂按户口定量供应：市区、郊县城镇居民及农场职工每人每年 18 块，郊县农民每人每年 12 块。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="structure">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">📽️ Two-Part Story</span></div>
+      <h2 class="headline">从近代香史，到现代香产业。</h2>
+      <div class="timeline" style="grid-template-columns: repeat(5, minmax(0, 1fr));">
+        <article class="node"><div class="year">01</div><p>外资香皂打开市场，也改变“干净”的社会意义。</p></article>
+        <article class="node"><div class="year">02</div><p>殖民与现代商业抢先定义“现代生活”。</p></article>
+        <article class="node"><div class="year">03</div><p>民族工业用工厂、商标和广告重写国货版本。</p></article>
+        <article class="node"><div class="year">04</div><p>计划经济把清洁放进共同生活秩序。</p></article>
+        <article class="node"><div class="year">05</div><p>市场经济把香异化成情绪溢价和商品奇观。</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="final">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">✨ Thesis</span></div>
+      <h2 class="quote">一百年前，上海人用香皂学习现代生活；一百年后，年轻人用香水想象上海生活。</h2>
+      <p class="lede">香味变了，但它一直在回答同一个问题：我们想成为什么样的城市人？</p>
+    </div>
+  </section>
+
+  <script>
+    const bar = document.querySelector(".bar");
+    const sections = Array.from(document.querySelectorAll(".section"));
+
+    document.querySelectorAll(".reel-strip").forEach(strip => {
+      const item = strip.querySelector(".reel-item");
+      const h = item ? item.getBoundingClientRect().height : 180;
+      strip.style.setProperty("--spin", `${h * 4}px`);
+    });
+
+    const wrap = document.querySelector(".perfume-wrap");
+    for (let i = 0; i < 34; i++) {
+      const m = document.createElement("span");
+      m.className = "mist";
+      m.style.left = 43 + Math.random() * 14 + "%";
+      m.style.top = 13 + Math.random() * 16 + "%";
+      m.style.setProperty("--mx", (-190 + Math.random() * 380) + "px");
+      m.style.setProperty("--my", (-120 - Math.random() * 260) + "px");
+      m.style.setProperty("--ms", (0.5 + Math.random() * 1.8).toFixed(2));
+      m.style.animationDelay = (Math.random() * 2.2).toFixed(2) + "s";
+      wrap.appendChild(m);
+    }
+
+    function updateProgress() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      if (window.gsap) gsap.to(bar, { width: pct + "%", duration: .18, ease: "none" });
+      else bar.style.width = pct + "%";
+    }
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+
+    if (window.gsap) {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const slot = document.querySelector(".slot");
+      const slotSection = document.querySelector("#slot");
+      const reels = Array.from(document.querySelectorAll(".reel"));
+      const reelStrips = Array.from(document.querySelectorAll(".reel-strip"));
+
+      gsap.set(".today", { y: 40, scale: .94, autoAlpha: 0 });
+      gsap.set(".slot-win-line", { scaleX: .44, autoAlpha: .28 });
+
+      function restartReels() {
+        reelStrips.forEach((strip, index) => {
+          strip.style.animation = "none";
+          strip.offsetHeight;
+          strip.style.animation = `reelSpin ${2.25 + index * 0.36}s cubic-bezier(.1,.78,.12,1) both`;
+        });
+      }
+
+      function slotBurst() {
+        if (!slot || prefersReducedMotion) return;
+        const rect = slot.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2 + window.scrollY;
+
+        for (let i = 0; i < 38; i++) {
+          const particle = document.createElement("span");
+          particle.className = i % 3 === 0 ? "coin" : "spark";
+          particle.style.left = `${cx}px`;
+          particle.style.top = `${cy}px`;
+          document.body.appendChild(particle);
+
+          gsap.fromTo(particle,
+            { x: 0, y: 0, scale: 0.2, rotation: 0, autoAlpha: 1 },
+            {
+              x: -360 + Math.random() * 720,
+              y: -320 + Math.random() * 220,
+              scale: 0.55 + Math.random() * 1.45,
+              rotation: -540 + Math.random() * 1080,
+              autoAlpha: 0,
+              duration: 1.15 + Math.random() * 0.6,
+              ease: "power3.out",
+              onComplete: () => particle.remove()
+            }
+          );
+        }
+      }
+
+      function playSlotShow() {
+        if (!slot) return;
+        restartReels();
+        slot.classList.add("hot");
+        window.setTimeout(() => slot.classList.remove("hot"), 1150);
+
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        tl.fromTo(".ding", { y: -18, rotation: -7, scale: .92 }, { y: 0, rotation: -2, scale: 1.04, duration: .28 })
+          .fromTo(".lever", { rotation: -8 }, { rotation: 38, duration: .24, ease: "power2.in" }, "<")
+          .to(".lever", { rotation: -6, duration: .38, ease: "elastic.out(1, .38)" })
+          .fromTo(reels, { y: -8, scaleY: 1.06 }, { y: 0, scaleY: 1, stagger: .08, duration: .42, ease: "back.out(2)" }, "-=.18")
+          .fromTo(".slot-win-line", { autoAlpha: .25, scaleX: .35 }, { autoAlpha: 1, scaleX: 1, duration: .46, ease: "power4.out" }, "+=1.75")
+          .fromTo(".today", { y: 40, autoAlpha: 0, scale: .94 }, { y: 0, autoAlpha: 1, scale: 1, duration: .56, ease: "back.out(1.8)" }, "-=.18")
+          .add(slotBurst, "-=.18")
+          .to(".slot-win-line", { autoAlpha: .55, duration: .32 }, "+=.2");
+      }
+
+      gsap.from(".headline, .lede, .eyebrow", { y: 34, autoAlpha: 0, stagger: .06, duration: .82, ease: "power3.out" });
+      gsap.from(".chip", { y: 24, scale: .84, autoAlpha: 0, stagger: .08, duration: .5, delay: .25 });
+      gsap.from(".poster", { y: 30, rotation: 0, autoAlpha: 0, stagger: .12, duration: .7, delay: .35 });
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || entry.target.dataset.done) return;
+          entry.target.dataset.done = "1";
+          gsap.from(entry.target.querySelectorAll(".node, .pill, .quote, .badge"), {
+            y: 42,
+            autoAlpha: 0,
+            stagger: .08,
+            duration: .62,
+            ease: "power3.out"
+          });
+        });
+      }, { threshold: .35 });
+      sections.forEach(section => io.observe(section));
+
+      const slotIO = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          if (slotSection.dataset.slotPlayed) return;
+          slotSection.dataset.slotPlayed = "1";
+          window.setTimeout(playSlotShow, 220);
+        });
+      }, { threshold: .55 });
+      if (slotSection) slotIO.observe(slotSection);
+      if (slot) slot.addEventListener("click", playSlotShow);
+    }
+
+    window.addEventListener("keydown", e => {
+      if (e.key === " " || e.key === "ArrowDown") {
+        e.preventDefault();
+        const current = Math.round(window.scrollY / window.innerHeight);
+        sections[Math.min(sections.length - 1, current + 1)].scrollIntoView({ behavior: "smooth" });
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const current = Math.round(window.scrollY / window.innerHeight);
+        sections[Math.max(0, current - 1)].scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  </script>
+</body>
+</html>
