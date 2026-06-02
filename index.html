@@ -786,8 +786,7 @@
       max-width: 1180px;
     }
     #final .quote,
-    #final-close .quote,
-    #final-memory .quote {
+    #final-close .quote {
       max-width: 980px;
       font-size: clamp(58px, 7vw, 96px);
       line-height: 1.05;
@@ -800,8 +799,7 @@
       display: block;
     }
     #final .lede,
-    #final-close .lede,
-    #final-memory .lede {
+    #final-close .lede {
       max-width: 1040px;
       font-size: clamp(22px, 2.1vw, 34px);
       line-height: 1.72;
@@ -920,6 +918,112 @@
       font-size: clamp(24px, 3vw, 42px);
       line-height: 1;
     }
+    #thesis-open .inner {
+      max-width: 1260px;
+      display: grid;
+      align-content: center;
+      min-height: 84vh;
+    }
+    .thesis-grid {
+      display: grid;
+      grid-template-columns: minmax(360px, 1fr) auto minmax(360px, 1fr);
+      gap: clamp(26px, 4vw, 62px);
+      align-items: center;
+      margin-top: clamp(22px, 3vw, 42px);
+    }
+    .century-card {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: clamp(26px, 3.8vw, 54px);
+      border: 1px solid rgba(247,236,218,.16);
+      background:
+        linear-gradient(135deg, rgba(247,236,218,.09), rgba(247,236,218,.025)),
+        radial-gradient(circle at 18% 18%, rgba(229,184,115,.18), transparent 18rem);
+      box-shadow: 0 28px 72px rgba(0,0,0,.18);
+      overflow: hidden;
+    }
+    .century-card::after {
+      content: attr(data-object);
+      position: absolute;
+      right: -18px;
+      bottom: -22px;
+      font-family: "SimSun", serif;
+      font-size: clamp(96px, 11vw, 170px);
+      font-weight: 900;
+      color: rgba(247,236,218,.055);
+      pointer-events: none;
+    }
+    .century-year {
+      color: #e5b873;
+      font-size: clamp(18px, 1.5vw, 24px);
+      font-weight: 950;
+      letter-spacing: .2em;
+    }
+    .century-main {
+      font-family: "SimSun", serif;
+      color: #f7ecda;
+      font-size: clamp(44px, 5.2vw, 78px);
+      line-height: 1.04;
+      font-weight: 900;
+    }
+    .century-main span {
+      display: block;
+    }
+    .century-sub {
+      max-width: 430px;
+      color: rgba(247,236,218,.7);
+      font-size: clamp(16px, 1.35vw, 21px);
+      line-height: 1.65;
+      font-weight: 780;
+    }
+    .thesis-bridge {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+      color: rgba(247,236,218,.56);
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+    .bridge-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e5b873;
+      box-shadow: 0 0 32px rgba(229,184,115,.6);
+    }
+    .thesis-question {
+      margin-top: clamp(30px, 4vw, 58px);
+      max-width: 1080px;
+      font-family: "SimSun", serif;
+      font-size: clamp(32px, 3.8vw, 58px);
+      line-height: 1.18;
+      font-weight: 900;
+      color: #f7ecda;
+    }
+    .thesis-question b {
+      color: #e5b873;
+      font-weight: 900;
+    }
+    .thesis-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .thesis-tags span {
+      padding: 8px 12px;
+      border: 1px solid rgba(229,184,115,.28);
+      color: rgba(247,236,218,.72);
+      background: rgba(247,236,218,.06);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
     .final-lines {
       display: grid;
       gap: 26px;
@@ -1031,13 +1135,6 @@
     .memory-line.indent {
       padding-left: clamp(36px, 6vw, 96px);
     }
-    #final-memory .inner {
-      display: grid;
-      align-content: center;
-      min-height: 78vh;
-      max-width: 1120px;
-    }
-
     @media (max-width: 900px) {
       html { scroll-snap-type: none; }
       .section { min-height: auto; padding: 84px 0 58px; }
@@ -1052,12 +1149,9 @@
       .poster, .lever { display: none; }
       .hint, .side-nav { display: none; }
       .big-quote { font-size: clamp(44px, 12vw, 72px); }
+      .thesis-grid { grid-template-columns: 1fr; }
+      .thesis-bridge { writing-mode: horizontal-tb; }
       .question-layout { grid-template-columns: 1fr; }
-      .memory-line,
-      .memory-line:nth-child(2) {
-        padding-left: 0;
-        white-space: normal;
-      }
     }
   </style>
 </head>
@@ -1072,6 +1166,7 @@
     <div class="hint">上下滚动 / Space</div>
   </div>
   <nav class="side-nav" aria-label="章节导航">
+    <a href="#thesis-open" data-target="thesis-open">00 选题</a>
     <a href="#intro" data-target="intro">01 香水</a>
     <a href="#soap" data-target="soap">02 开埠</a>
     <a href="#timeline" data-target="timeline">03 外资香皂</a>
@@ -1081,6 +1176,27 @@
     <a href="#quote-market" data-target="quote-market">07 香氛消费</a>
     <a href="#final" data-target="final">08 结论</a>
   </nav>
+
+  <section class="section dark" id="thesis-open">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">Research Question</span></div>
+      <div class="thesis-grid">
+        <article class="century-card" data-object="皂">
+          <div class="century-year">一百年前</div>
+          <div class="century-main"><span>上海人用香皂</span><span>学习现代生活</span></div>
+          <p class="century-sub">干净不只是洗掉污垢，也开始变成一种可以被看见的城市身份。</p>
+        </article>
+        <div class="thesis-bridge"><span>from soap</span><span class="bridge-dot"></span><span>to perfume</span></div>
+        <article class="century-card" data-object="香">
+          <div class="century-year">一百年后</div>
+          <div class="century-main"><span>年轻人用香水</span><span>想象上海生活</span></div>
+          <p class="century-sub">香味不再只服务卫生，而是被包装成体面、情绪和城市幻想。</p>
+        </article>
+      </div>
+      <div class="thesis-question">所以我们真正想问的是：<b>为什么在上海，一种味道会不断被赋予现代、体面、身份和欲望？</b></div>
+      <div class="thesis-tags"><span>香皂</span><span>近代工业</span><span>公共卫生</span><span>计划经济</span><span>香水消费</span><span>上海想象</span></div>
+    </div>
+  </section>
 
   <section class="section" id="intro">
     <div class="poster p1">香水成本拆解<em>not a product demo</em></div>
@@ -1272,20 +1388,6 @@
     </div>
   </section>
 
-  <section class="section dark quote-section" id="final-memory">
-    <div class="inner">
-      <div class="eyebrow"><span class="badge">Final Line</span></div>
-      <div class="memory-statement">
-        <span class="memory-line">一百年前</span>
-        <span class="memory-line indent">上海人用香皂</span>
-        <span class="memory-line indent">学习现代生活</span>
-        <span class="memory-line gold">一百年后</span>
-        <span class="memory-line gold indent">年轻人用香水</span>
-        <span class="memory-line gold indent">想象上海生活</span>
-      </div>
-    </div>
-  </section>
-
   <script>
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     if (!window.location.hash) {
@@ -1448,7 +1550,7 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting || entry.target.dataset.done) return;
           entry.target.dataset.done = "1";
-          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap, .keyword, .big-quote span, .flow-item, .flow-arrow, .final-line, .final-side-note, .final-question-kicker, .final-question span, .memory-line"), {
+          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap, .keyword, .big-quote span, .flow-item, .flow-arrow, .century-card, .thesis-bridge, .thesis-question, .thesis-tags span, .final-line, .final-side-note, .final-question-kicker, .final-question span"), {
             y: 54,
             autoAlpha: 0,
             filter: "blur(10px)",
@@ -1477,7 +1579,6 @@
           : id === "meaning-shift" ? "planned"
           : id === "market" ? "quote-market"
           : id === "final-close" ? "final"
-          : id === "final-memory" ? "final"
           : id;
 
         navLinks.forEach(link => {
