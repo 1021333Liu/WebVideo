@@ -59,6 +59,40 @@
         radial-gradient(circle at 22% 18%, #fff, transparent 26rem);
       mix-blend-mode: multiply;
     }
+    .ambient-light {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 460px;
+      height: 460px;
+      border-radius: 50%;
+      z-index: 3;
+      pointer-events: none;
+      opacity: .22;
+      background: radial-gradient(circle, rgba(255,247,219,.72), rgba(135,183,168,.24) 34%, transparent 70%);
+      mix-blend-mode: screen;
+      filter: blur(8px);
+      transform: translate3d(-50%, -50%, 0);
+    }
+    .scent-trace {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      opacity: .32;
+      mix-blend-mode: multiply;
+    }
+    .dark .scent-trace { mix-blend-mode: screen; }
+    .scent-path {
+      fill: none;
+      stroke: rgba(31,102,91,.42);
+      stroke-width: 1.4;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
 
     .hud {
       position: fixed;
@@ -147,14 +181,24 @@
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 13px;
-      background: rgba(244,234,216,.74);
-      border: 1px solid var(--line);
-      box-shadow: 0 12px 26px rgba(22,18,14,.08);
+      gap: 11px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
       font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .18em;
+      color: rgba(22,18,14,.62);
     }
-    .dark .badge { background: rgba(247,236,218,.10); border-color: rgba(247,236,218,.18); }
+    .badge::before {
+      content: "";
+      width: 38px;
+      height: 1px;
+      background: currentColor;
+      opacity: .68;
+    }
+    .dark .badge { color: rgba(247,236,218,.62); background: transparent; border-color: transparent; }
 
     .perfume-wrap {
       position: relative;
@@ -553,6 +597,7 @@
       border: 1px solid var(--line);
       background: rgba(244,234,216,.70);
       font-weight: 900;
+      transition: transform .28s ease, background .28s ease, border-color .28s ease;
     }
     .dark .mini { background: rgba(247,236,218,.10); border-color: rgba(247,236,218,.16); }
     .timeline {
@@ -570,6 +615,8 @@
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 18px 38px rgba(22,18,14,.08);
+      transition: transform .32s ease, box-shadow .32s ease, border-color .32s ease;
+      will-change: transform;
     }
     .dark .node, .dark .pill {
       background: rgba(247,236,218,.08);
@@ -596,6 +643,8 @@
       font-size: clamp(16px, 1.45vw, 22px);
       font-weight: 850;
       box-shadow: 0 16px 34px rgba(22,18,14,.08);
+      transition: transform .3s ease, background .3s ease;
+      will-change: transform;
     }
     .quote {
       font-family: "SimSun", serif;
@@ -624,6 +673,12 @@
       justify-content: space-between;
       position: relative;
       overflow: hidden;
+      transition: transform .34s ease, box-shadow .34s ease, border-color .34s ease;
+      will-change: transform;
+    }
+    .node:hover, .fact:hover, .pill:hover, .mini:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 60px rgba(22,18,14,.13);
     }
     .fact::after {
       content: attr(data-mark);
@@ -669,6 +724,10 @@
   </style>
 </head>
 <body>
+  <div class="ambient-light"></div>
+  <svg class="scent-trace" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+    <path class="scent-path" d="M-80,610 C180,470 120,210 380,250 C610,286 570,610 800,520 C990,446 926,162 1260,116" />
+  </svg>
   <div class="hud">
     <div class="brand">小香味，大上海</div>
     <div class="rail"><div class="bar"></div></div>
@@ -686,10 +745,10 @@
         <span class="chip">酒精</span><span class="chip">香精</span><span class="chip">玻璃瓶</span><span class="chip">喷头</span><span class="chip">包装盒</span><span class="chip">品牌故事</span>
       </div>
       <div>
-        <div class="eyebrow"><span class="badge">🧪 Cost Breakdown</span></div>
+        <div class="eyebrow"><span class="badge">Cost Breakdown</span></div>
         <h1 class="headline">一瓶 899 元的香水，真正贵的是什么？</h1>
         <p class="lede">它叫“雨后梧桐”。它说自己像武康路的傍晚，像老洋房窗边的白衬衫，像一个人下班后不想解释的疲惫。</p>
-        <div class="soap-grid"><span class="mini">💸 情绪溢价</span><span class="mini">🧥 体面外套</span><span class="mini">🏙️ 上海幻想</span></div>
+        <div class="soap-grid"><span class="mini">情绪溢价</span><span class="mini">体面外套</span><span class="mini">上海幻想</span></div>
       </div>
     </div>
   </section>
@@ -714,7 +773,7 @@
     <div class="inner split">
       <div class="soap">香皂</div>
       <div>
-        <div class="eyebrow"><span class="badge">🧼 The Reverse</span></div>
+        <div class="eyebrow"><span class="badge">The Reverse</span></div>
         <h2 class="headline">这件事，要从一块香皂说起。</h2>
         <p class="lede">不是中国从零开始学会“香”，而是近代上海把家庭、礼俗和身体里的清洁，放进了洋行、百货、广告和公共卫生组成的新系统。</p>
       </div>
@@ -723,7 +782,7 @@
 
   <section class="section" id="timeline">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">📰 Imported Soap</span></div>
+      <div class="eyebrow"><span class="badge">Imported Soap</span></div>
       <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">外资香皂如何打开上海市场？</h2>
       <div class="timeline">
         <article class="node"><div class="year">1881</div><p>《申报》可见祥茂黄肥皂广告，外资肥皂开始进入城市视野。</p></article>
@@ -740,18 +799,18 @@
     <div class="inner split">
       <h2 class="quote">谁有权定义干净，谁就有权定义现代。</h2>
       <div class="stack">
-        <div class="pill">🏭 工业化商品：配方、包装、商标、价格</div>
-        <div class="pill">🏬 洋行与百货：渠道、橱窗、消费场景</div>
-        <div class="pill">📰 现代广告：卫生、文明、体面、摩登</div>
-        <div class="pill">🚿 公共卫生：身体清洁变成城市秩序</div>
-        <div class="pill">🧭 定义权竞争：外资先定义，本土工业再改写</div>
+        <div class="pill">工业化商品：配方、包装、商标、价格</div>
+        <div class="pill">洋行与百货：渠道、橱窗、消费场景</div>
+        <div class="pill">现代广告：卫生、文明、体面、摩登</div>
+        <div class="pill">公共卫生：身体清洁变成城市秩序</div>
+        <div class="pill">定义权竞争：外资先定义，本土工业再改写</div>
       </div>
     </div>
   </section>
 
   <section class="section" id="national">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">🏷️ National Brands</span></div>
+      <div class="eyebrow"><span class="badge">National Brands</span></div>
       <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">国货不是把洋货骂走，而是站上同一个货架，卖得过它。</h2>
       <p class="lede">外资先教会市场什么叫现代化商品，上海本土工业很快接过这套方法：用自己的工厂、商标、香味和广告，把现代生活重写成国货版本。</p>
       <div class="four-grid">
@@ -765,7 +824,7 @@
 
   <section class="section" id="planned">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">🧾 Planned Cleanliness</span></div>
+      <div class="eyebrow"><span class="badge">Planned Cleanliness</span></div>
       <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">计划经济时代，香先被改造成“干净的共同秩序”。</h2>
       <p class="lede">不是国家突然给每个人发浪漫，而是公共卫生运动、计划生产和户口供应，把肥皂、药皂、洗衣粉放进了普通人的日常管理。</p>
       <div class="four-grid">
@@ -779,7 +838,7 @@
 
   <section class="section dark" id="market">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">💸 Commodity Spectacle</span></div>
+      <div class="eyebrow"><span class="badge">Commodity Spectacle</span></div>
       <h2 class="headline" style="font-size: clamp(40px, 5.8vw, 86px); max-width: 1180px;">当香不再证明“我干净”，而是暗示“我是谁”。</h2>
       <p class="lede">市场经济打开新的消费空间，香被从功能里拆出来，重新装进故事里。奇观与日常之间的差价，就是今天都市人为情绪、身份和欲望支付的溢价。</p>
       <div class="four-grid">
@@ -793,7 +852,7 @@
 
   <section class="section dark" id="final">
     <div class="inner">
-      <div class="eyebrow"><span class="badge">✨ Final Question</span></div>
+      <div class="eyebrow"><span class="badge">Final Question</span></div>
       <h2 class="quote">你闻到的，到底是谁的上海？</h2>
       <p class="lede">从老式药皂的消毒味，到弄堂里的洗衣粉味；从商场一楼的香水柜台，到小红书上的年度最爱香氛。有些味道属于集体记忆，有些味道属于个人幻觉，但大部分味道，属于定价。</p>
       <div class="stack" style="margin-top: 30px; max-width: 980px;">
@@ -811,6 +870,13 @@
 
     const bar = document.querySelector(".bar");
     const sections = Array.from(document.querySelectorAll(".section"));
+    const scentPath = document.querySelector(".scent-path");
+    let scentLength = 0;
+    if (scentPath) {
+      scentLength = scentPath.getTotalLength();
+      scentPath.style.strokeDasharray = scentLength;
+      scentPath.style.strokeDashoffset = scentLength;
+    }
 
     function fitSingleLine(selector, minSize) {
       const el = document.querySelector(selector);
@@ -856,6 +922,9 @@
       const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
       if (window.gsap) gsap.to(bar, { width: pct + "%", duration: .18, ease: "none" });
       else bar.style.width = pct + "%";
+      if (scentPath && scentLength) {
+        scentPath.style.strokeDashoffset = scentLength * (1 - pct / 100);
+      }
     }
     window.addEventListener("scroll", updateProgress, { passive: true });
     updateProgress();
@@ -867,6 +936,18 @@
       const reels = Array.from(document.querySelectorAll(".reel"));
       const reelStrips = Array.from(document.querySelectorAll(".reel-strip"));
       let slotTimeline;
+
+      const light = document.querySelector(".ambient-light");
+      if (light) {
+        const xTo = gsap.quickTo(light, "x", { duration: .72, ease: "power3" });
+        const yTo = gsap.quickTo(light, "y", { duration: .72, ease: "power3" });
+        xTo(window.innerWidth * .72);
+        yTo(window.innerHeight * .28);
+        window.addEventListener("pointermove", event => {
+          xTo(event.clientX);
+          yTo(event.clientY);
+        }, { passive: true });
+      }
 
       gsap.set(".today", { y: 40, scale: .94, autoAlpha: 0 });
       gsap.set(".slot-win-line", { scaleX: .44, autoAlpha: .28 });
@@ -927,23 +1008,33 @@
           .to(".slot-win-line", { autoAlpha: .55, duration: .32 }, "+=.2");
       }
 
-      gsap.from(".headline, .lede, .eyebrow", { y: 34, autoAlpha: 0, stagger: .06, duration: .82, ease: "power3.out" });
       gsap.from(".chip", { y: 24, scale: .84, autoAlpha: 0, stagger: .08, duration: .5, delay: .25 });
       gsap.from(".poster", { y: 30, rotation: 0, autoAlpha: 0, stagger: .12, duration: .7, delay: .35 });
       const io = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (!entry.isIntersecting || entry.target.dataset.done) return;
           entry.target.dataset.done = "1";
-          gsap.from(entry.target.querySelectorAll(".node, .pill, .quote, .badge, .fact"), {
-            y: 42,
+          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap"), {
+            y: 54,
             autoAlpha: 0,
-            stagger: .08,
-            duration: .62,
-            ease: "power3.out"
+            filter: "blur(10px)",
+            stagger: { each: .055, from: "start" },
+            duration: .86,
+            ease: "power3.out",
+            clearProps: "filter"
           });
         });
       }, { threshold: .35 });
       sections.forEach(section => io.observe(section));
+
+      document.querySelectorAll(".node, .fact, .pill, .mini").forEach(card => {
+        card.addEventListener("pointerenter", () => {
+          gsap.to(card, { y: -8, scale: 1.015, duration: .32, ease: "power3.out", overwrite: "auto" });
+        });
+        card.addEventListener("pointerleave", () => {
+          gsap.to(card, { y: 0, scale: 1, duration: .34, ease: "power3.out", overwrite: "auto" });
+        });
+      });
 
       const slotIO = new IntersectionObserver(entries => {
         entries.forEach(entry => {
