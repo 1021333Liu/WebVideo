@@ -135,6 +135,8 @@
       position: relative;
       z-index: 2;
       width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
     }
     .dark {
       color: #f7ecda;
@@ -177,9 +179,13 @@
     .dark .lede { color: rgba(247,236,218,.76); }
     .split {
       display: grid;
-      grid-template-columns: minmax(360px, .92fr) minmax(420px, 1.08fr);
-      gap: min(6vw, 80px);
+      grid-template-columns: minmax(360px, .95fr) minmax(420px, 1.05fr);
+      gap: min(5vw, 68px);
       align-items: center;
+    }
+    .split .stack {
+      width: min(100%, 720px);
+      justify-self: end;
     }
     .badge {
       display: inline-flex;
@@ -338,7 +344,16 @@
     .p2 { right: 8vw; bottom: 10vh; --r: 6deg; }
     .p3 { right: 4vw; top: 16vh; --r: 10deg; }
 
-    .slot-stage { max-width: 1120px; margin: 0 auto; display: grid; gap: 28px; justify-items: center; text-align: center; }
+    .slot-stage {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+      justify-items: center;
+      text-align: center;
+      align-content: center;
+      padding-top: 42px;
+    }
     .slot-stage::after {
       content: "JACKPOT";
       position: absolute;
@@ -367,6 +382,7 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
       padding: 18px;
+      width: min(100%, 960px);
       border: 2px solid rgba(247,236,218,.78);
       background:
         linear-gradient(180deg, #201b16, #0f0d0c),
@@ -466,7 +482,7 @@
       pointer-events: none;
     }
     .reel {
-      height: clamp(132px, 19vh, 188px);
+      height: clamp(112px, 15vh, 156px);
       overflow: hidden;
       border: 1px solid rgba(244,234,216,.34);
       background: #f8f1e5;
@@ -494,10 +510,10 @@
     .reel:nth-child(3) .reel-strip { animation-duration: 3.15s; }
     @keyframes reelSpin { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--spin))); } }
     .reel-item {
-      height: clamp(132px, 19vh, 188px);
+      height: clamp(112px, 15vh, 156px);
       display: grid;
       place-items: center;
-      font-size: clamp(28px, 4.7vw, 60px);
+      font-size: clamp(26px, 4vw, 52px);
       font-family: "SimSun", serif;
       font-weight: 900;
       color: var(--ink);
@@ -509,9 +525,9 @@
       line-height: 1;
       font-weight: 900;
       width: 100%;
-      max-width: 1120px;
+      max-width: 1040px;
       text-align: center;
-      margin: 10px auto 0;
+      margin: 2px auto 0;
       display: grid;
       gap: 12px;
       justify-items: center;
@@ -526,7 +542,7 @@
     .today b {
       display: inline-block;
       font-family: "SimSun", serif;
-      font-size: clamp(30px, 6.6vw, 86px);
+      font-size: clamp(30px, 5.4vw, 70px);
       font-weight: 900;
       letter-spacing: 0;
       white-space: nowrap;
@@ -663,12 +679,13 @@
     }
     .four-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
       margin-top: 34px;
+      max-width: 1120px;
     }
     .fact {
-      min-height: 280px;
+      min-height: 220px;
       border: 1px solid var(--line);
       background: rgba(244,234,216,.68);
       padding: 20px;
@@ -698,12 +715,12 @@
     }
     .fact strong {
       font-family: "SimSun", serif;
-      font-size: clamp(32px, 4vw, 56px);
+      font-size: clamp(30px, 3.4vw, 48px);
       color: var(--cinnabar);
       line-height: 1;
     }
     .fact p {
-      font-size: clamp(14px, 1.18vw, 18px);
+      font-size: clamp(14px, 1.04vw, 17px);
       line-height: 1.56;
       color: rgba(22,18,14,.74);
     }
@@ -712,6 +729,32 @@
       border-color: rgba(247,236,218,.16);
     }
     .dark .fact p { color: rgba(247,236,218,.75); }
+    #market .headline {
+      max-width: 1040px;
+      font-size: clamp(46px, 5.2vw, 76px) !important;
+      line-height: 1.03;
+    }
+    #final .inner {
+      max-width: 1180px;
+    }
+    #final .quote {
+      max-width: 980px;
+      font-size: clamp(58px, 7vw, 96px);
+      line-height: 1.05;
+    }
+    .final-title-line {
+      display: block;
+      white-space: nowrap;
+    }
+    #final .lede {
+      max-width: 1040px;
+      font-size: clamp(22px, 2.1vw, 34px);
+      line-height: 1.72;
+    }
+    #final .stack {
+      max-width: 1080px !important;
+      gap: 18px;
+    }
 
     @media (max-width: 900px) {
       html { scroll-snap-type: none; }
@@ -859,7 +902,7 @@
   <section class="section dark" id="final">
     <div class="inner">
       <div class="eyebrow"><span class="badge">Final Question</span></div>
-      <h2 class="quote">你闻到的，到底是谁的上海？</h2>
+      <h2 class="quote"><span class="final-title-line">你闻到的，</span><span class="final-title-line">到底是谁的上海？</span></h2>
       <p class="lede">从老式药皂的消毒味，到弄堂里的洗衣粉味；从商场一楼的香水柜台，到小红书上的年度最爱香氛。有些味道属于集体记忆，有些味道属于个人幻觉，但大部分味道，属于定价。</p>
       <div class="stack" style="margin-top: 30px; max-width: 980px;">
         <div class="pill">你为香味花的每一分钱，都在回答一个问题：你希望自己是谁？</div>
