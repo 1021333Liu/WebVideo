@@ -125,6 +125,9 @@
       font-weight: 900;
       letter-spacing: 0;
       max-width: 1120px;
+      text-wrap: balance;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
     .lede {
       margin-top: 26px;
@@ -471,12 +474,17 @@
       font-size: clamp(15px, 1.35vw, 20px);
       letter-spacing: .18em;
       color: rgba(247,236,218,.62);
+      white-space: nowrap;
     }
     .today b {
-      display: block;
+      display: inline-block;
       font-family: "SimSun", serif;
+      font-size: clamp(30px, 6.6vw, 86px);
       font-weight: 900;
       letter-spacing: 0;
+      white-space: nowrap;
+      word-break: keep-all;
+      overflow-wrap: normal;
       text-shadow: 0 0 34px rgba(229,184,115,.32);
     }
     .jackpot-line {
@@ -595,6 +603,9 @@
       line-height: 1.04;
       font-weight: 900;
       max-width: 1120px;
+      text-wrap: balance;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
     .four-grid {
       display: grid;
@@ -800,6 +811,25 @@
 
     const bar = document.querySelector(".bar");
     const sections = Array.from(document.querySelectorAll(".section"));
+
+    function fitSingleLine(selector, minSize) {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      const fit = () => {
+        el.style.fontSize = "";
+        let size = parseFloat(getComputedStyle(el).fontSize);
+        const parentWidth = el.parentElement ? el.parentElement.clientWidth : window.innerWidth;
+        while (el.scrollWidth > parentWidth && size > minSize) {
+          size -= 1;
+          el.style.fontSize = `${size}px`;
+        }
+      };
+      fit();
+      window.addEventListener("resize", fit, { passive: true });
+    }
+
+    fitSingleLine(".today b", 24);
+    fitSingleLine(".today span", 12);
 
     document.querySelectorAll(".reel-strip").forEach(strip => {
       const item = strip.querySelector(".reel-item");
