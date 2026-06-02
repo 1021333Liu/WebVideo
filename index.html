@@ -755,6 +755,125 @@
       max-width: 1080px !important;
       gap: 18px;
     }
+    .side-nav {
+      position: fixed;
+      z-index: 35;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      gap: 8px;
+      pointer-events: auto;
+    }
+    .side-nav a {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 9px;
+      align-items: center;
+      color: rgba(22,18,14,.44);
+      text-decoration: none;
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: .12em;
+      font-weight: 900;
+      text-transform: uppercase;
+      transition: color .24s ease, transform .24s ease;
+    }
+    .side-nav a::before {
+      content: "";
+      height: 1px;
+      background: currentColor;
+      transform-origin: left center;
+      transform: scaleX(.45);
+      transition: transform .24s ease;
+    }
+    .side-nav a.active {
+      color: var(--cinnabar);
+      transform: translateX(4px);
+    }
+    .side-nav a.active::before { transform: scaleX(1); }
+    body.nav-dark .side-nav a { color: rgba(247,236,218,.46); }
+    body.nav-dark .side-nav a.active { color: #e5b873; }
+    .keyword-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+      max-width: 900px;
+    }
+    .keyword {
+      padding: 7px 10px;
+      border: 1px solid rgba(22,18,14,.16);
+      background: rgba(244,234,216,.44);
+      color: rgba(22,18,14,.62);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+    .dark .keyword {
+      border-color: rgba(247,236,218,.16);
+      background: rgba(247,236,218,.07);
+      color: rgba(247,236,218,.66);
+    }
+    .quote-section .inner {
+      display: grid;
+      justify-items: center;
+      text-align: center;
+    }
+    .big-quote {
+      font-family: "SimSun", serif;
+      font-size: clamp(64px, 8.2vw, 132px);
+      line-height: 1.04;
+      font-weight: 900;
+      letter-spacing: 0;
+      max-width: 1180px;
+      text-wrap: balance;
+    }
+    .big-quote span { display: block; }
+    .thesis-flow {
+      display: grid;
+      gap: 22px;
+      margin-top: 40px;
+      max-width: 760px;
+    }
+    .flow-item {
+      display: grid;
+      gap: 6px;
+      justify-items: center;
+    }
+    .flow-era {
+      color: rgba(247,236,218,.56);
+      font-size: clamp(14px, 1.25vw, 18px);
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .flow-value {
+      font-family: "SimSun", serif;
+      font-size: clamp(38px, 5vw, 72px);
+      font-weight: 900;
+      color: #f7ecda;
+    }
+    .flow-arrow {
+      color: rgba(229,184,115,.72);
+      font-size: clamp(24px, 3vw, 42px);
+      line-height: 1;
+    }
+    .final-lines {
+      display: grid;
+      gap: 26px;
+      margin-top: 36px;
+      max-width: 980px;
+    }
+    .final-line {
+      font-family: "SimSun", serif;
+      font-size: clamp(34px, 4.4vw, 66px);
+      line-height: 1.12;
+      font-weight: 900;
+      color: #f7ecda;
+    }
+    .final-line.muted { color: rgba(247,236,218,.62); }
+    .final-line.strong { color: #e5b873; }
 
     @media (max-width: 900px) {
       html { scroll-snap-type: none; }
@@ -768,7 +887,8 @@
       .reel, .reel-item { height: 118px; }
       .soap { width: min(370px, 82vw); }
       .poster, .lever { display: none; }
-      .hint { display: none; }
+      .hint, .side-nav { display: none; }
+      .big-quote { font-size: clamp(44px, 12vw, 72px); }
     }
   </style>
 </head>
@@ -782,6 +902,16 @@
     <div class="rail"><div class="bar"></div></div>
     <div class="hint">上下滚动 / Space</div>
   </div>
+  <nav class="side-nav" aria-label="章节导航">
+    <a href="#intro" data-target="intro">01 香水</a>
+    <a href="#soap" data-target="soap">02 开埠</a>
+    <a href="#timeline" data-target="timeline">03 外资香皂</a>
+    <a href="#quote-modern" data-target="quote-modern">04 现代性</a>
+    <a href="#national" data-target="national">05 国货</a>
+    <a href="#planned" data-target="planned">06 计划经济</a>
+    <a href="#quote-market" data-target="quote-market">07 香氛消费</a>
+    <a href="#final" data-target="final">08 结论</a>
+  </nav>
 
   <section class="section" id="intro">
     <div class="poster p1">香水成本拆解<em>not a product demo</em></div>
@@ -825,6 +955,7 @@
         <div class="eyebrow"><span class="badge">The Reverse</span></div>
         <h2 class="headline">这件事，要从一块香皂说起。</h2>
         <p class="lede">不是中国从零开始学会“香”，而是近代上海把家庭、礼俗和身体里的清洁，放进了洋行、百货、广告和公共卫生组成的新系统。</p>
+        <div class="keyword-row"><span class="keyword">开埠</span><span class="keyword">洋行</span><span class="keyword">百货</span><span class="keyword">广告</span><span class="keyword">清洁</span></div>
       </div>
     </div>
   </section>
@@ -833,6 +964,7 @@
     <div class="inner">
       <div class="eyebrow"><span class="badge">Imported Soap</span></div>
       <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">外资香皂如何打开上海市场？</h2>
+      <div class="keyword-row"><span class="keyword">外资香皂</span><span class="keyword">工业化</span><span class="keyword">广告</span><span class="keyword">商标</span><span class="keyword">卫生</span><span class="keyword">现代性</span></div>
       <div class="timeline">
         <article class="node"><div class="year">1881</div><p>《申报》可见祥茂黄肥皂广告，外资肥皂开始进入城市视野。</p></article>
         <article class="node"><div class="year">1910</div><p>日光肥皂广告出现，品牌、商标、广告话语持续塑造“现代清洁”。</p></article>
@@ -844,9 +976,16 @@
     </div>
   </section>
 
+  <section class="section dark quote-section" id="quote-modern">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">Modernity</span></div>
+      <h2 class="big-quote"><span>谁有权定义干净</span><span>谁就有权定义现代</span></h2>
+    </div>
+  </section>
+
   <section class="section dark" id="mechanism">
     <div class="inner split">
-      <h2 class="quote">谁有权定义干净，谁就有权定义现代。</h2>
+      <h2 class="quote">殖民与现代商业，带来的不是香皂本身。</h2>
       <div class="stack">
         <div class="pill">工业化商品：配方、包装、商标、价格</div>
         <div class="pill">洋行与百货：渠道、橱窗、消费场景</div>
@@ -862,6 +1001,7 @@
       <div class="eyebrow"><span class="badge">National Brands</span></div>
       <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">国货不是把洋货骂走，而是站上同一个货架，卖得过它。</h2>
       <p class="lede">外资先教会市场什么叫现代化商品，上海本土工业很快接过这套方法：用自己的工厂、商标、香味和广告，把现代生活重写成国货版本。</p>
+      <div class="keyword-row"><span class="keyword">民族工业</span><span class="keyword">蜂花</span><span class="keyword">双妹</span><span class="keyword">檀香</span><span class="keyword">本土化</span></div>
       <div class="four-grid">
         <article class="fact" data-mark="厂"><strong>1912</strong><p>方液仙在上海创办中国化学工业社，做牙粉、雪花膏、肥皂，把工业方法翻译成本土话语。</p></article>
         <article class="fact" data-mark="香"><strong>1928</strong><p>中央香皂厂推出蜂花檀香皂。檀香不是简单模仿玫瑰和薰衣草，而是中国人闻得懂的东方味道。</p></article>
@@ -871,11 +1011,19 @@
     </div>
   </section>
 
+  <section class="section dark quote-section" id="quote-national">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">National Reply</span></div>
+      <h2 class="big-quote"><span>国货不是把洋货骂走</span><span>而是站上同一个货架</span><span>卖得过它</span></h2>
+    </div>
+  </section>
+
   <section class="section" id="planned">
     <div class="inner">
       <div class="eyebrow"><span class="badge">Planned Cleanliness</span></div>
       <h2 class="headline" style="font-size: clamp(38px, 5.4vw, 78px); max-width: 1180px;">计划经济时代，香先被改造成“干净的共同秩序”。</h2>
       <p class="lede">不是国家突然给每个人发浪漫，而是公共卫生运动、计划生产和户口供应，把肥皂、药皂、洗衣粉放进了普通人的日常管理。</p>
+      <div class="keyword-row"><span class="keyword">卫生运动</span><span class="keyword">定量供应</span><span class="keyword">药皂</span><span class="keyword">白猫</span><span class="keyword">秩序</span></div>
       <div class="four-grid">
         <article class="fact" data-mark="卫"><strong>1952</strong><p>爱国卫生运动兴起。卫生从“家里讲不讲究”，变成学校、单位、里弄、街道都要参与的公共事务。</p></article>
         <article class="fact" data-mark="除"><strong>1958</strong><p>除四害运动展开。干净开始和集体秩序、防疫动员、城市治理绑定在一起。</p></article>
@@ -885,11 +1033,33 @@
     </div>
   </section>
 
+  <section class="section dark quote-section" id="meaning-shift">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">Meaning Shift</span></div>
+      <h2 class="big-quote"><span>香味的意义</span><span>一直在变化</span></h2>
+      <div class="thesis-flow">
+        <div class="flow-item"><div class="flow-era">近代上海</div><div class="flow-value">香味 = 清洁</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-item"><div class="flow-era">计划经济</div><div class="flow-value">香味 = 卫生</div></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-item"><div class="flow-era">消费社会</div><div class="flow-value">香味 = 身份</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark quote-section" id="quote-market">
+    <div class="inner">
+      <div class="eyebrow"><span class="badge">Consumption</span></div>
+      <h2 class="big-quote"><span>香味不再证明</span><span>我干净</span><span>而是在暗示</span><span>我是谁</span></h2>
+    </div>
+  </section>
+
   <section class="section dark" id="market">
     <div class="inner">
       <div class="eyebrow"><span class="badge">Commodity Spectacle</span></div>
       <h2 class="headline" style="font-size: clamp(40px, 5.8vw, 86px); max-width: 1180px;">当香不再证明“我干净”，而是暗示“我是谁”。</h2>
       <p class="lede">市场经济打开新的消费空间，香被从功能里拆出来，重新装进故事里。奇观与日常之间的差价，就是今天都市人为情绪、身份和欲望支付的溢价。</p>
+      <div class="keyword-row"><span class="keyword">香氛消费</span><span class="keyword">商品奇观</span><span class="keyword">情绪溢价</span><span class="keyword">身份</span><span class="keyword">定价</span></div>
       <div class="four-grid">
         <article class="fact" data-mark="60"><strong>配方</strong><p>全球约 60% 香氛洗护、30%-40% 中高端香水的香精配方来自少数国际香精公司，它们也在上海设研发中心。</p></article>
         <article class="fact" data-mark="基"><strong>香基</strong><p>同一套白麝香、青草花香框架，可能出现在 19.9 元沐浴露、200 元国产香水和千元沙龙香里。</p></article>
@@ -903,11 +1073,12 @@
     <div class="inner">
       <div class="eyebrow"><span class="badge">Final Question</span></div>
       <h2 class="quote"><span class="final-title-line">你闻到的，</span><span class="final-title-line">到底是谁的上海？</span></h2>
-      <p class="lede">从老式药皂的消毒味，到弄堂里的洗衣粉味；从商场一楼的香水柜台，到小红书上的年度最爱香氛。有些味道属于集体记忆，有些味道属于个人幻觉，但大部分味道，属于定价。</p>
-      <div class="stack" style="margin-top: 30px; max-width: 980px;">
-        <div class="pill">你为香味花的每一分钱，都在回答一个问题：你希望自己是谁？</div>
-        <div class="pill">上海从不只有一种味道，只是消费社会替你选了一种最方便卖的。</div>
-        <div class="pill">下次拿起香水前，先问三秒：我闻到的是香味，还是一个被策划好的自己？</div>
+      <div class="final-lines">
+        <div class="final-line muted">有些味道，属于集体记忆</div>
+        <div class="final-line muted">有些味道，属于个人幻觉</div>
+        <div class="final-line strong">但大部分味道，属于定价</div>
+        <div class="final-line">上海从不只有一种味道</div>
+        <div class="final-line">只是消费社会，替你选了一种最方便卖的</div>
       </div>
     </div>
   </section>
@@ -919,6 +1090,7 @@
 
     const bar = document.querySelector(".bar");
     const sections = Array.from(document.querySelectorAll(".section"));
+    const navLinks = Array.from(document.querySelectorAll(".side-nav a"));
     const scentPath = document.querySelector(".scent-path");
     let scentLength = 0;
     if (scentPath) {
@@ -945,6 +1117,14 @@
 
     fitSingleLine(".today b", 24);
     fitSingleLine(".today span", 12);
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        const target = document.getElementById(link.dataset.target);
+        if (target) target.scrollIntoView({ behavior: "smooth" });
+      });
+    });
 
     document.querySelectorAll(".reel-strip").forEach(strip => {
       const item = strip.querySelector(".reel-item");
@@ -1063,7 +1243,7 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting || entry.target.dataset.done) return;
           entry.target.dataset.done = "1";
-          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap"), {
+          gsap.from(entry.target.querySelectorAll(".eyebrow, .headline, .lede, .node, .pill, .quote, .badge, .fact, .mini, .soap, .keyword, .big-quote span, .flow-item, .flow-arrow, .final-line"), {
             y: 54,
             autoAlpha: 0,
             filter: "blur(10px)",
@@ -1075,6 +1255,29 @@
         });
       }, { threshold: .35 });
       sections.forEach(section => io.observe(section));
+
+      const navIO = new IntersectionObserver(entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+
+        const id = visible.target.id;
+        const dark = visible.target.classList.contains("dark");
+        document.body.classList.toggle("nav-dark", dark);
+
+        const navId = id === "slot" ? "intro"
+          : id === "mechanism" ? "quote-modern"
+          : id === "quote-national" ? "national"
+          : id === "meaning-shift" ? "planned"
+          : id === "market" ? "quote-market"
+          : id;
+
+        navLinks.forEach(link => {
+          link.classList.toggle("active", link.dataset.target === navId);
+        });
+      }, { threshold: [0.36, 0.55, 0.72] });
+      sections.forEach(section => navIO.observe(section));
 
       document.querySelectorAll(".node, .fact, .pill, .mini").forEach(card => {
         card.addEventListener("pointerenter", () => {
