@@ -21,7 +21,7 @@
 
     * { box-sizing: border-box; }
     html {
-      scroll-snap-type: y mandatory;
+      scroll-snap-type: y proximity;
       scroll-behavior: smooth;
       background: var(--paper);
     }
@@ -119,14 +119,15 @@
     .hint { font-size: 12px; color: rgba(22,18,14,.56); white-space: nowrap; }
 
     .section {
-      min-height: 100vh;
+      min-height: 112vh;
       scroll-snap-align: start;
+      scroll-snap-stop: always;
       position: relative;
       z-index: 1;
       display: grid;
       grid-template-columns: minmax(24px, 7vw) minmax(0, 1fr) minmax(24px, 7vw);
       align-items: center;
-      padding: 98px 0 70px;
+      padding: 118px 0 96px;
       overflow: hidden;
     }
     .inner {
@@ -160,8 +161,10 @@
       letter-spacing: 0;
       max-width: 1120px;
       text-wrap: balance;
-      word-break: keep-all;
-      overflow-wrap: normal;
+    }
+    .split .headline {
+      font-size: clamp(42px, 5.8vw, 86px);
+      line-height: 1.03;
     }
     .lede {
       margin-top: 26px;
@@ -602,12 +605,12 @@
     .dark .mini { background: rgba(247,236,218,.10); border-color: rgba(247,236,218,.16); }
     .timeline {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
       margin-top: 34px;
     }
     .node {
-      min-height: 250px;
+      min-height: 192px;
       border: 1px solid var(--line);
       background: rgba(244,234,216,.62);
       padding: 18px;
@@ -653,8 +656,10 @@
       font-weight: 900;
       max-width: 1120px;
       text-wrap: balance;
-      word-break: keep-all;
-      overflow-wrap: normal;
+    }
+    .split .quote {
+      font-size: clamp(40px, 5.4vw, 78px);
+      line-height: 1.06;
     }
     .four-grid {
       display: grid;
@@ -663,7 +668,7 @@
       margin-top: 34px;
     }
     .fact {
-      min-height: 235px;
+      min-height: 280px;
       border: 1px solid var(--line);
       background: rgba(244,234,216,.68);
       padding: 20px;
@@ -683,10 +688,10 @@
     .fact::after {
       content: attr(data-mark);
       position: absolute;
-      right: -8px;
-      bottom: -18px;
+      right: 12px;
+      bottom: 12px;
       font-family: "SimSun", serif;
-      font-size: 86px;
+      font-size: 72px;
       font-weight: 900;
       color: rgba(22,18,14,.06);
       pointer-events: none;
@@ -710,11 +715,12 @@
 
     @media (max-width: 900px) {
       html { scroll-snap-type: none; }
-      .section { padding: 84px 0 50px; }
+      .section { min-height: auto; padding: 84px 0 58px; }
       .split { grid-template-columns: 1fr; }
       .perfume-wrap { min-height: 450px; }
       .perfume { width: min(280px, 68vw); }
       .timeline, .soap-grid, .four-grid { grid-template-columns: 1fr; }
+      .fact { min-height: 220px; }
       .slot { grid-template-columns: 1fr; }
       .reel, .reel-item { height: 118px; }
       .soap { width: min(370px, 82vw); }
